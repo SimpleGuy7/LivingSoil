@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#07140F">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="LivingSoil">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>LivingSoil — Natural Soil, Stone &amp; Handmade Teak</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4EEE4; --bg-alt:#E6E6D1; --fg:#2A241E; --muted:#6B6153;
+    --accent:#A6432C; --accent-dark:#7C3220; --wood:#6B4A34; --wood-light:#9C7A56;
+    --stone:#AFA48C; --stone-dark:#8A8069; --line:rgba(42,36,30,.16); --card:#FFFFFF;
+    --serif:'Fraunces',Georgia,'Times New Roman',serif;
+    --sans:'Work Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#1B1712; --bg-alt:#1F2417; --fg:#EDE6DC; --muted:#B7AC9B;
+      --accent:#D9744F; --accent-dark:#C1573A; --wood:#A8815F; --wood-light:#C6A87C;
+      --stone:#8A7F68; --stone-dark:#6E6553; --line:rgba(237,230,220,.16); --card:#221D17;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1B1712; --bg-alt:#1F2417; --fg:#EDE6DC; --muted:#B7AC9B;
+    --accent:#D9744F; --accent-dark:#C1573A; --wood:#A8815F; --wood-light:#C6A87C;
+    --stone:#8A7F68; --stone-dark:#6E6553; --line:rgba(237,230,220,.16); --card:#221D17;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; scroll-padding-top:calc(72px + env(safe-area-inset-top,0px));}
+  body{
+    margin:0; background:var(--bg); color:var(--fg); font-family:var(--sans);
+    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+    line-height:1.55;
+  }
+  h1,h2,h3{font-family:var(--serif); font-weight:600; margin:0 0 .4em; line-height:1.15;}
+  p{margin:0 0 1em; color:var(--fg);}
+  a{color:inherit;}
+  .muted{color:var(--muted);}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+  section{padding:88px 0;}
+  .band{background:var(--bg-alt);}
+
+  header.nav{
+    position:sticky; top:env(safe-area-inset-top,0px); z-index:50;
+    background:rgba(244,238,228,.92); backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  @media (prefers-color-scheme: dark){ header.nav{ background:rgba(27,23,18,.9);} }
+  header.nav .wrap{display:flex; align-items:center; justify-content:space-between; height:72px;}
+  .brand{font-family:var(--serif); font-size:1.35rem; font-weight:700; letter-spacing:.2px; text-decoration:none;}
+  .brand span{color:var(--accent);}
+  nav.links{display:flex; gap:28px; align-items:center;}
+  nav.links a{text-decoration:none; font-size:.96rem; color:var(--fg); padding:4px 0; border-bottom:2px solid transparent;}
+  nav.links a[aria-current="page"]{border-color:var(--accent); color:var(--accent-dark);}
+  nav.links a:hover{color:var(--accent-dark);}
+  .cart-badge{font-size:.85rem; color:var(--muted); border:1px solid var(--line); border-radius:20px; padding:3px 12px;}
+  .burger{display:none; background:none; border:1px solid var(--line); border-radius:8px; padding:8px 10px; font-size:1.1rem; color:var(--fg);}
+  .mobile-panel{display:none; flex-direction:column; gap:2px; padding:8px 24px 18px; border-bottom:1px solid var(--line);}
+  .mobile-panel a{padding:10px 0; text-decoration:none; color:var(--fg); border-bottom:1px solid var(--line);}
+  .mobile-panel a:last-child{border-bottom:none;}
+  @media (max-width:760px){
+    nav.links{display:none;}
+    .burger{display:inline-block;}
+    .mobile-panel.open{display:flex;}
+  }
+
+  .btn{display:inline-block; font-family:var(--sans); font-weight:500; font-size:.95rem; text-decoration:none;
+       padding:13px 26px; border-radius:3px; border:1px solid transparent; cursor:pointer;}
+  .btn-primary{background:var(--accent); color:#fff;}
+  .btn-primary:hover{background:var(--accent-dark);}
+  .btn-outline{background:transparent; border-color:var(--fg); color:var(--fg);}
+  .btn-outline:hover{border-color:var(--accent-dark); color:var(--accent-dark);}
+  .btn-small{padding:9px 16px; font-size:.85rem;}
+
+  .hero{position:relative; overflow:hidden; padding:0; min-height:max(640px, calc(100svh - 72px)); display:flex; align-items:flex-start;}
+  .hero-grid{position:relative; z-index:2; width:100%; padding-top:clamp(56px,11vh,130px); padding-bottom:48px;}
+  .hero h1{font-size:clamp(2.7rem,6.4vw,5.6rem); font-weight:400; line-height:1.02; letter-spacing:-.028em; color:var(--green-deep); max-width:8.5em; margin-bottom:.45em;}
+  .hero p.lead{font-size:1.05rem; max-width:34ch; color:var(--muted); margin-bottom:1.6em;}
+  .hero .actions{display:flex; gap:12px; flex-wrap:wrap;}
+  .tex{border-radius:4px; aspect-ratio:4/3.2; border:1px solid var(--line);}
+  .tex-soil{background:
+    radial-gradient(circle at 22% 30%, rgba(0,0,0,.18) 0 6px, transparent 7px),
+    radial-gradient(circle at 68% 18%, rgba(0,0,0,.14) 0 5px, transparent 6px),
+    radial-gradient(circle at 40% 62%, rgba(0,0,0,.16) 0 7px, transparent 8px),
+    radial-gradient(circle at 82% 70%, rgba(0,0,0,.13) 0 5px, transparent 6px),
+    radial-gradient(circle at 12% 78%, rgba(255,255,255,.10) 0 5px, transparent 6px),
+    radial-gradient(circle at 58% 85%, rgba(0,0,0,.12) 0 4px, transparent 5px),
+    linear-gradient(160deg, #B24A31, #7C3220);}
+  .tex-stone{background:
+    radial-gradient(circle at 25% 30%, rgba(255,255,255,.30) 0 10px, transparent 11px),
+    radial-gradient(circle at 65% 25%, rgba(0,0,0,.16) 0 14px, transparent 15px),
+    radial-gradient(circle at 45% 65%, rgba(255,255,255,.20) 0 12px, transparent 13px),
+    radial-gradient(circle at 80% 70%, rgba(0,0,0,.14) 0 9px, transparent 10px),
+    radial-gradient(circle at 15% 75%, rgba(0,0,0,.10) 0 11px, transparent 12px),
+    linear-gradient(160deg, var(--stone), var(--stone-dark));}
+  .tex-rock{background:
+    radial-gradient(circle at 30% 35%, rgba(0,0,0,.22) 0 22px, transparent 23px),
+    radial-gradient(circle at 75% 55%, rgba(255,255,255,.16) 0 18px, transparent 19px),
+    radial-gradient(circle at 20% 78%, rgba(0,0,0,.18) 0 16px, transparent 17px),
+    linear-gradient(160deg, #8a7c63, #5f5340);}
+  .tex-wood{background:
+    repeating-linear-gradient(95deg, rgba(0,0,0,.10) 0 3px, transparent 3px 14px),
+    linear-gradient(160deg, var(--wood-light), var(--wood));}
+
+  .head-row{display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:40px; flex-wrap:wrap;}
+  .head-row h2{font-size:clamp(1.6rem,2.6vw,2.1rem); max-width:20ch;}
+  .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
+  .grid4{display:grid; grid-template-columns:repeat(4,1fr); gap:22px;}
+  @media (max-width:900px){.grid3{grid-template-columns:1fr 1fr;} .grid4{grid-template-columns:1fr 1fr;}}
+  @media (max-width:560px){.grid3{grid-template-columns:1fr;} .grid4{grid-template-columns:1fr;}}
+
+  .p-card{border:1px solid var(--line); border-radius:4px; overflow:hidden; background:var(--card);}
+  .p-card .tex{border-radius:0; border:none; aspect-ratio:16/11;}
+  .p-card .body{padding:18px 20px 20px;}
+  .p-card h3{font-size:1.15rem; margin-bottom:.3em;}
+  .p-card .row{display:flex; justify-content:space-between; align-items:center; margin-top:14px;}
+  .p-card .price{font-weight:600;}
+
+  .why-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:28px;}
+  @media (max-width:760px){.why-grid{grid-template-columns:1fr 1fr;}}
+  .why-item{display:flex; gap:12px; align-items:flex-start;}
+  .dot{width:10px; height:10px; border-radius:50%; margin-top:7px; flex:none;}
+  .dot.d1{background:var(--accent);} .dot.d2{background:var(--wood);} .dot.d3{background:var(--stone-dark);} .dot.d4{background:var(--green);}
+  .why-item h3{font-size:1.02rem; margin-bottom:.25em;}
+  .why-item p{color:var(--muted); font-size:.94rem; margin:0;}
+
+  .gal{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  @media (max-width:760px){.gal{grid-template-columns:1fr 1fr;}}
+  .gal figure{margin:0;}
+  .gal .tex{aspect-ratio:1/1;}
+  .gal figcaption{margin-top:8px; font-size:.9rem; color:var(--muted);}
+
+  .quotes{display:grid; grid-template-columns:1fr 1fr; gap:36px;}
+  @media (max-width:700px){.quotes{grid-template-columns:1fr;}}
+  blockquote{margin:0; padding-left:18px; border-left:2px solid var(--accent);}
+  blockquote p{font-size:1.05rem; font-family:var(--serif); font-weight:400;}
+  blockquote cite{font-style:normal; color:var(--muted); font-size:.9rem;}
+
+  .contact-grid{display:grid; grid-template-columns:.8fr 1.2fr; gap:56px;}
+  @media (max-width:760px){.contact-grid{grid-template-columns:1fr;}}
+  .field{margin-bottom:16px;}
+  .field label{display:block; font-size:.88rem; color:var(--muted); margin-bottom:6px;}
+  .field input, .field textarea{
+    width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:3px;
+    background:var(--card); color:var(--fg); font-family:var(--sans); font-size:.96rem;
+  }
+  .field textarea{min-height:110px; resize:vertical;}
+  .confirm{display:none; padding:14px 16px; border:1px solid var(--line); border-radius:3px; background:var(--bg-alt);}
+
+  footer{background:var(--fg); color:var(--bg); padding:48px 0 max(28px, env(safe-area-inset-bottom,0px));}
+  footer a{color:var(--bg); text-decoration:none; opacity:.85;}
+  footer a:hover{opacity:1;}
+  .foot-row{display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; align-items:flex-start;}
+  .foot-links{display:flex; gap:20px; flex-wrap:wrap;}
+  .foot-fine{margin-top:32px; font-size:.85rem; opacity:.65;}
+
+  .wood-hero{background:linear-gradient(160deg, var(--wood-light), var(--wood)); color:#fff; padding:80px 0 64px;}
+  .wood-hero h1{color:#fff; max-width:16ch;}
+  .wood-hero p{color:rgba(255,255,255,.88); max-width:50ch;}
+
+  .key{aspect-ratio:1/1; border:1px solid var(--line); border-radius:4px; background:var(--card); display:flex; align-items:center; justify-content:center; position:relative;}
+  .shape-round{width:58%; height:58%; border-radius:50%; background:linear-gradient(155deg, var(--wood-light), var(--wood)); margin:0 auto; position:relative;}
+  .shape-leaf{width:58%; height:58%; background:linear-gradient(155deg, var(--wood-light), var(--wood)); border-radius:0% 100% 0% 100%; transform:rotate(45deg); margin:0 auto; position:relative;}
+  .shape-block{width:56%; height:70%; background:linear-gradient(155deg, var(--wood-light), var(--wood)); border-radius:6px; margin:0 auto; position:relative;}
+  .shape-tag{width:62%; height:52%; background:linear-gradient(155deg, var(--wood-light), var(--wood)); border-radius:6px; margin:0 auto; display:flex; align-items:center; justify-content:center; font-family:var(--serif); color:#fff; font-size:1.2rem; position:relative;}
+  .shape-round::after, .shape-leaf::after, .shape-block::after, .shape-tag::after{
+    content:""; position:absolute; width:12px; height:12px; border-radius:50%; background:var(--bg); border:2px solid var(--wood-light); top:-6px; left:50%; transform:translateX(-50%);
+  }
+  .shape-leaf::after{transform:translateX(-50%) rotate(-45deg);}
+
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;}
+  @media (max-width:760px){.two-col{grid-template-columns:1fr;}}
+  ul.care{padding-left:20px; margin:0;}
+  ul.care li{margin-bottom:8px;}
+
+  .cta-band{background:var(--accent); color:#fff; text-align:center; padding:64px 24px;}
+  .cta-band h2{color:#fff;}
+  .cta-band .btn-outline{border-color:#fff; color:#fff;}
+  .cta-band .btn-outline:hover{background:#fff; color:var(--accent-dark);}
+
+  [hidden]{display:none !important;}
+  :focus-visible{outline:2px solid var(--accent-dark); outline-offset:2px;}
+
+  :root{--ease:cubic-bezier(.4,0,.2,1); --dur:.3s;}
+  nav.links a{transition:color var(--dur) var(--ease), border-color var(--dur) var(--ease);}
+  .btn{transition:background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease), transform .18s var(--ease);}
+  .btn:hover{transform:translateY(-2px);}
+  .btn:active{transform:translateY(0) scale(.97);}
+  .btn-primary.added{background:var(--wood-light);}
+  .p-card{transition:transform var(--dur) var(--ease), border-color var(--dur) var(--ease);}
+  .p-card:hover{transform:translateY(-4px); border-color:var(--accent);}
+  .mobile-panel{display:flex; max-height:0; overflow:hidden; opacity:0; padding:0 24px; border-bottom-color:transparent; transition:max-height var(--dur) var(--ease), opacity var(--dur) var(--ease), padding var(--dur) var(--ease);}
+  .mobile-panel a{transition:color var(--dur) var(--ease);}
+  .mobile-panel.open{max-height:340px; opacity:1; padding:8px 24px 18px; border-bottom-color:var(--line);}
+  .cart-badge{transition:border-color var(--dur) var(--ease);}
+  .cart-badge.pulse{animation:pulse .35s var(--ease);}
+  @keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.15);}100%{transform:scale(1);}}
+  #contactForm{transition:opacity var(--dur) var(--ease);}
+  .confirm{opacity:0; transition:opacity var(--dur) var(--ease);}
+  .confirm.in{opacity:1;}
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s var(--ease), transform .6s var(--ease);}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  #home-view, #wood-view{opacity:1; transform:translateY(0); transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease);}
+  #home-view.fading, #wood-view.fading{opacity:0; transform:translateY(8px);}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *, *::before, *::after{transition-duration:.001ms !important; animation-duration:.001ms !important;}
+    .reveal{opacity:1 !important; transform:none !important;}
+  }
+
+  :root{--green:#5F7A54;}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){--green:#93B784;} }
+  :root[data-theme="dark"]{--green:#93B784;}
+  .cart-badge{background:none; font:inherit; cursor:pointer; appearance:none;}
+  .overlay-page{position:fixed; inset:0; background:var(--bg); z-index:200; overflow-y:auto; display:flex; flex-direction:column;}
+  .ov-header{position:sticky; top:0; display:flex; align-items:center; justify-content:space-between; padding:calc(16px + env(safe-area-inset-top,0px)) 20px 16px; border-bottom:1px solid var(--line); background:var(--bg); z-index:2;}
+  .ov-header h2{margin:0; font-size:1.15rem;}
+  .ov-back{background:none; border:1px solid var(--line); border-radius:50%; width:40px; height:40px; font-size:1.1rem; cursor:pointer; color:var(--fg); transition:background-color var(--dur) var(--ease);}
+  .ov-back:hover{background:var(--bg-alt);}
+  .ov-body{flex:1; padding:20px; max-width:640px; margin:0 auto; width:100%;}
+  .ov-footer{position:sticky; bottom:0; padding:16px 20px calc(16px + env(safe-area-inset-bottom,0px)); background:var(--bg); border-top:1px solid var(--line);}
+  .cart-item{display:flex; align-items:center; gap:14px; padding:14px 0; border-bottom:1px solid var(--line);}
+  .cart-thumb{width:44px; height:44px; border-radius:50%; background:linear-gradient(155deg,var(--wood-light),var(--wood)); flex:none;}
+  .ci-info{flex:1;}
+  .ci-info h4{margin:0 0 2px; font-family:var(--serif); font-size:1rem;}
+  .ci-qty{display:flex; align-items:center; gap:8px;}
+  .qty-btn{width:28px; height:28px; border-radius:50%; border:1px solid var(--line); background:var(--card); cursor:pointer; font-size:.95rem; transition:background-color var(--dur) var(--ease);}
+  .qty-btn:hover{background:var(--bg-alt);}
+  .ci-total{width:64px; text-align:right; font-weight:600;}
+  .cart-empty{text-align:center; padding:60px 20px; color:var(--muted);}
+  .order-summary{border:1px solid var(--line); border-radius:4px; padding:14px 16px; margin-bottom:8px;}
+  .os-row{display:flex; justify-content:space-between; font-size:.94rem; padding:5px 0;}
+  .os-total{border-top:1px solid var(--line); margin-top:6px; padding-top:10px; font-weight:600;}
+  .pay-h3{font-size:1rem; margin:26px 0 12px;}
+  .two-field{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:560px){ .two-field{grid-template-columns:1fr;} }
+  .swipe-pay{position:relative; height:58px; border-radius:29px; background:var(--bg-alt); border:1px solid var(--line); overflow:hidden; touch-action:none; user-select:none;}
+  .swipe-pay.disabled{opacity:.5; pointer-events:none;}
+  .swipe-fill{position:absolute; inset:0; width:0; background:linear-gradient(90deg,var(--wood-light),var(--green)); border-radius:29px;}
+  .swipe-label{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:var(--muted); font-weight:500; pointer-events:none; z-index:1;}
+  .swipe-thumb{position:absolute; top:4px; left:4px; width:50px; height:50px; border-radius:50%; background:var(--accent); color:#fff; border:none; font-size:1.1rem; cursor:grab; display:flex; align-items:center; justify-content:center; transition:background-color var(--dur) var(--ease); z-index:2; touch-action:none;}
+  .swipe-thumb:active{cursor:grabbing;}
+  .swipe-pay.complete .swipe-thumb{background:var(--green);}
+  .ov-complete{position:fixed; inset:0; z-index:400; background:rgba(0,0,0,.42); display:flex; align-items:center; justify-content:center; padding:24px;}
+  .complete-card{position:relative; z-index:2; background:var(--card); border-radius:8px; padding:40px 32px; text-align:center; max-width:360px; box-shadow:0 20px 50px rgba(0,0,0,.25);}
+  .check-circle{color:var(--green); margin:0 auto 18px; width:52px; animation:pop .45s var(--ease);}
+  @keyframes pop{0%{transform:scale(.4); opacity:0;}60%{transform:scale(1.12); opacity:1;}100%{transform:scale(1);}}
+  .confetti-layer{position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:1;}
+  .confetti-piece{position:absolute; bottom:0; left:50%; width:8px; height:14px; border-radius:2px; animation:confetti-burst var(--cdur,1.1s) ease-out forwards; animation-delay:var(--cdelay,0s);}
+  @keyframes confetti-burst{
+    0%{transform:translate(-50%,0) rotate(0deg); opacity:1;}
+    100%{transform:translate(calc(-50% + var(--tx,0px)), var(--ty,-260px)) rotate(var(--rot,360deg)); opacity:0;}
+  }
+  .overlay-page{opacity:0; transform:translateY(14px); transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease);}
+  .overlay-page.show{opacity:1; transform:translateY(0);}
+  .ov-complete{opacity:0; transition:opacity .3s var(--ease);}
+  .ov-complete.show{opacity:1;}
+  .swipe-thumb{transition:left .35s var(--ease), background-color var(--dur) var(--ease);}
+  .swipe-fill{transition:width .35s var(--ease);}
+  .swipe-pay.dragging .swipe-thumb, .swipe-pay.dragging .swipe-fill{transition:none;}
+  .field input:focus, .field textarea:focus{border-color:var(--accent); box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent); outline:none;}
+  .p-card{box-shadow:0 1px 3px rgba(0,0,0,.05);}
+  .p-card:hover{box-shadow:0 10px 24px rgba(0,0,0,.08);}
+  .btn-primary{font-weight:600;}
+  @media (max-width:560px){ section{padding:64px 0;} }
+  button, a{-webkit-tap-highlight-color:transparent;}
+  .btn:active{transform:none;}
+  .press-active{transform:scale(.92);}
+  @keyframes press-bounce{0%{transform:scale(.92);}55%{transform:scale(1.1);}100%{transform:scale(1);}}
+  .press-bounce{animation:press-bounce .32s var(--ease);}
+  .add-cart, .stepper{transition:opacity .22s var(--ease), transform .22s var(--ease);}
+  .add-cart.morph-hide, .stepper.morph-hide{opacity:0; transform:scale(.6);}
+  .add-cart.locked{pointer-events:none;}
+  .stepper{display:inline-flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:4px 8px;}
+  .step-btn{width:26px; height:26px; border-radius:50%; border:1px solid var(--line); background:var(--bg-alt); font-size:1rem; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--fg);}
+  .step-qty{min-width:14px; text-align:center; font-weight:600; display:inline-block;}
+  @keyframes qroll{0%{transform:translateY(-8px); opacity:0;}100%{transform:translateY(0); opacity:1;}}
+  .step-qty.roll{animation:qroll .22s var(--ease);}
+  .fly-dot{position:fixed; width:16px; height:16px; border-radius:50%; z-index:500; pointer-events:none;}
+  nav.links{position:relative;}
+  .nav-indicator{position:absolute; bottom:-1px; height:2px; background:var(--accent); border-radius:2px; transition:left .3s var(--ease), width .3s var(--ease); left:0; width:0;}
+  .draw-circle, .draw-check{stroke-dasharray:1; stroke-dashoffset:1;}
+  .ov-complete.show .draw-circle{animation:draw .5s var(--ease) forwards;}
+  .ov-complete.show .draw-check{animation:draw .35s var(--ease) .45s forwards;}
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  .ov-complete.show .complete-card{animation:cardPop .5s var(--ease);}
+  @keyframes cardPop{0%{transform:scale(.7) rotate(-6deg); opacity:0;}60%{transform:scale(1.05) rotate(2deg); opacity:1;}100%{transform:scale(1) rotate(0);}}
+  .head-row h2::before{content:""; display:block; width:36px; height:3px; background:var(--green); border-radius:2px; margin-bottom:10px;}
+  .quotes blockquote:nth-child(2){border-left-color:var(--green);}
+  footer{border-top:3px solid var(--green);}
+
+  :root{--green-deep:#2F5D3A;}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){--green-deep:#A5CC92;} }
+  :root[data-theme="dark"]{--green-deep:#A5CC92;}
+  .wrap-wide{max-width:1320px; padding-left:40px; padding-right:40px;}
+  @media (max-width:560px){ .wrap-wide{padding-left:24px; padding-right:24px;} }
+  nav.links a[aria-current="page"]{border-color:transparent;}
+  header.nav{border-bottom-color:transparent; transition:border-color var(--dur) var(--ease);}
+  header.nav.scrolled{border-bottom-color:var(--line);}
+  nav.links{margin-left:auto; margin-right:22px;}
+  .cart-badge{margin-right:12px; padding:8px 16px; border-radius:999px; color:var(--fg);}
+  .btn-pill{border-radius:999px; padding:16px 34px;}
+  .btn-dark{background:var(--fg); color:var(--bg);}
+  .btn-dark:hover{background:var(--green-deep); color:var(--bg);}
+  .nav-cta{padding:11px 22px; font-size:.9rem;}
+  @media (max-width:760px){ .nav-cta{display:none;} .cart-badge{margin-left:auto; margin-right:8px;} }
+
+  .hero-art{position:absolute; right:-3vw; bottom:-2px; width:min(64vw,940px); z-index:1; pointer-events:none;}
+  .hero-art svg{display:block; width:100%; height:auto; overflow:visible;}
+  @media (max-width:900px){
+    .hero{display:block; min-height:0; padding-bottom:90vw;}
+    .hero-art{right:-24vw; width:132vw;}
+  }
+  .hero-art .rise{opacity:0;}
+  .hero-art.go .rise{animation:artRise 1.1s var(--ease) both;}
+  @keyframes artRise{from{opacity:0; transform:translateY(60px);} to{opacity:1; transform:none;}}
+  .hero-art .pop{opacity:0; transform-box:fill-box; transform-origin:50% 100%;}
+  .hero-art.go .pop{animation:artPop .55s cubic-bezier(.34,1.56,.64,1) both; animation-delay:var(--d,1s);}
+  @keyframes artPop{from{opacity:0; transform:scale(0);} to{opacity:1; transform:scale(1);}}
+  .hero-art .stem{stroke-dasharray:1; stroke-dashoffset:1;}
+  .hero-art.go .stem{animation:draw .9s var(--ease) .5s both;}
+  .hero-art .leaf{opacity:0; transform-box:fill-box;}
+  .hero-art .leaf-r{transform-origin:0% 100%;}
+  .hero-art .leaf-l{transform-origin:100% 100%;}
+  .hero-art.go .leaf-r{animation:leafIn .8s cubic-bezier(.34,1.4,.64,1) 1.25s both;}
+  .hero-art.go .leaf-l{animation:leafIn .8s cubic-bezier(.34,1.4,.64,1) 1.4s both;}
+  @keyframes leafIn{from{opacity:0; transform:scale(0) rotate(-25deg);} to{opacity:1; transform:scale(1) rotate(0);}}
+  .hero-art .sway{transform-box:fill-box; transform-origin:50% 100%;}
+  .hero-art.go .sway{animation:sway 8s ease-in-out 2.3s infinite;}
+  @keyframes sway{0%{transform:rotate(0deg);} 25%{transform:rotate(-2.2deg);} 75%{transform:rotate(2.4deg);} 100%{transform:rotate(0deg);}}
+  @media (prefers-reduced-motion: reduce){
+    .hero-art *{animation-delay:0s !important;}
+    .hero-art.go .sway{animation:none !important;}
+  }
+
+  /* ===== Woodworking page: deep-forest theme ===== */
+  :root{--gold:#E3B94B;}
+  #wood-view, body.forest header.nav{--bg:#07140F; --bg-alt:#0B1F16; --fg:#EEF1E6; --muted:#A8B7A6; --line:rgba(238,241,230,.14); --card:#0E2A1C; --accent:#E3B94B; --accent-dark:#C99A2E; --green:#78A85F; --green-deep:#BFD9A8;}
+  #wood-view{background:#07140F; color:var(--fg);}
+  #wood-view .btn-primary{background:var(--gold); color:#1A2410;}
+  #wood-view .btn-primary:hover{background:#F0CB66; color:#1A2410;}
+  header.nav{transition:border-color var(--dur) var(--ease), background-color .4s var(--ease);}
+  body.forest header.nav{background:transparent; backdrop-filter:none; color:var(--fg);}
+  body.forest header.nav.scrolled{background:rgba(7,20,15,.82); backdrop-filter:blur(12px);}
+  body.forest nav.links{background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); border-radius:999px; padding:10px 28px; backdrop-filter:blur(8px); margin-left:auto; margin-right:auto;}
+  body.forest .nav-indicator{display:none;}
+  body.forest nav.links a:hover, body.forest nav.links a[aria-current="page"]{color:var(--gold);}
+  body.forest .nav-cta{background:var(--gold); color:#1A2410;}
+  body.forest .nav-cta:hover{background:#F0CB66; color:#1A2410;}
+  body.forest .mobile-panel{background:rgba(7,20,15,.97);}
+
+  .bt-hero{position:relative; margin-top:-76px; padding:174px 0 190px; text-align:center; overflow:hidden; isolation:isolate; background:radial-gradient(120% 90% at 18% 8%, #134A2E 0%, #0A2418 46%, #06120D 100%);}
+  .bt-hero::after{content:""; position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(180deg, rgba(5,14,10,0) 0%, rgba(5,14,10,.12) 55%, #07140F 100%);}
+  .bt-scene{position:absolute; inset:0; z-index:0;}
+  .bokeh{position:absolute; border-radius:50%; background:radial-gradient(circle, rgba(255,205,120,.5), rgba(255,205,120,0) 68%); filter:blur(5px); animation:bokeh var(--bd,5s) ease-in-out infinite alternate;}
+  @keyframes bokeh{from{opacity:.3; transform:scale(.92);} to{opacity:.85; transform:scale(1.07);}}
+  .hang{position:absolute; top:-6px; transform-origin:50% 0; animation:swingSoft var(--sd,6s) ease-in-out var(--sl,0s) infinite alternate;}
+  .hang i{display:block; width:1px; height:var(--cord,120px); margin:0 auto; background:linear-gradient(#cdd3c9,#6c776b); opacity:.75;}
+  .hang svg{display:block; width:var(--w,64px); height:auto; margin:-4px 0 0; filter:drop-shadow(0 14px 14px rgba(0,0,0,.5));}
+  .hang.far{filter:blur(2.5px); opacity:.55;}
+  @keyframes swing{from{transform:rotate(-3.5deg);} to{transform:rotate(3.5deg);}}
+  @keyframes swingSoft{from{transform:rotate(-2.2deg);} to{transform:rotate(2.2deg);}}
+  .bt-hero-inner{position:relative; z-index:2; max-width:860px; margin:0 auto; padding:0 24px;}
+  .bt-hero h1, .bt-head h2, .bt-copy h2, .bt-stats h2{font-family:'Playfair Display','Fraunces',Georgia,serif; font-weight:500; letter-spacing:-.01em;}
+  .bt-hero h1{font-size:clamp(2.3rem,5.4vw,4.4rem); line-height:1.12; color:#fff; margin-bottom:.3em;}
+  .squig{display:block; width:min(300px,60%); margin:0 auto 22px; overflow:visible;}
+  .squig path{stroke-dasharray:1; stroke-dashoffset:1;}
+  .reveal.in .squig path{animation:draw 1.1s var(--ease) .4s forwards;}
+  .bt-hero p{color:rgba(238,241,230,.82); max-width:46ch; margin:0 auto 32px;}
+  .bt-cta{display:flex; gap:22px; justify-content:center; align-items:center; flex-wrap:wrap;}
+  .bt-ghost{display:inline-flex; align-items:center; gap:12px; border:1px solid rgba(255,255,255,.35); border-radius:999px; padding:10px 12px 10px 26px; color:#fff; text-decoration:none; font-weight:500; background:rgba(255,255,255,.05); backdrop-filter:blur(6px); transition:background-color var(--dur) var(--ease), border-color var(--dur) var(--ease);}
+  .bt-ghost:hover{background:rgba(255,255,255,.12); border-color:#fff;}
+  .bt-ghost .ico{width:32px; height:32px; border-radius:50%; background:#fff; color:#0A2418; display:grid; place-items:center;}
+  .bt-call{display:inline-flex; align-items:center; gap:12px; text-decoration:none; color:#fff; text-align:left;}
+  .bt-call .ph{width:50px; height:50px; border-radius:50%; background:#1F6B43; display:grid; place-items:center; box-shadow:0 0 0 6px rgba(31,107,67,.25);}
+  .bt-call small{display:block; font-size:.74rem; color:rgba(255,255,255,.7);}
+  .bt-call b{font-weight:600; font-size:.95rem;}
+
+  .bt-feature{padding:0 0 100px; margin-top:-110px; position:relative; z-index:3;}
+  .bt-card-green{position:relative; display:grid; grid-template-columns:1.05fr .95fr; gap:20px; border-radius:24px; padding:46px 50px; min-height:310px; background:radial-gradient(80% 120% at 85% 100%, #2C6B3F 0%, #164A2E 55%, #0F3822 100%); border:1px solid rgba(255,255,255,.08); box-shadow:0 30px 60px rgba(0,0,0,.4);}
+  .bt-clip{position:absolute; inset:0; border-radius:24px; overflow:hidden; pointer-events:none;}
+  .olive{position:absolute; right:-50px; bottom:-60px; width:380px; height:380px; border-radius:50%; background:radial-gradient(circle at 35% 30%, #A0B04C, #5E702B 70%);}
+  .bt-left, .bt-right{position:relative; z-index:1;}
+  .bt-rate{display:inline-flex; gap:8px; align-items:center; background:#fff; color:#12281B; font-size:.78rem; font-weight:600; padding:6px 14px; border-radius:999px;}
+  .bt-rate b, .rate b{color:#E0A81F; letter-spacing:2px; font-weight:400;}
+  .bt-quote{margin:22px 0 0; font-size:1.02rem; color:rgba(238,241,230,.92); max-width:44ch;}
+  .bt-person{display:flex; align-items:center; gap:14px; margin-top:34px;}
+  .av{width:50px; height:50px; border-radius:50%; background:linear-gradient(135deg,#C58F5B,#6E3F1D); display:grid; place-items:center; font-weight:600; color:#fff; border:2px solid var(--gold);}
+  .bt-person strong{display:block; font-family:'Playfair Display','Fraunces',Georgia,serif; font-weight:500; color:#fff;}
+  .bt-person small{color:rgba(238,241,230,.7);}
+  .bt-big{position:absolute; right:-15px; top:-84px; width:190px; transform-origin:50% 0; filter:drop-shadow(0 24px 22px rgba(0,0,0,.45)); animation:swingSoft 7s ease-in-out infinite alternate;}
+  .pill{position:absolute; display:inline-flex; align-items:center; gap:9px; padding:8px 16px; border-radius:999px; background:rgba(255,255,255,.14); backdrop-filter:blur(6px); color:#fff; font-size:.78rem; border:1px solid rgba(255,255,255,.16); white-space:nowrap;}
+  .pill i{width:8px; height:8px; border-radius:50%; background:#fff;}
+  .pill.p1{top:26px; left:14%;} .pill.p2{top:48%; left:-2%;} .pill.p3{bottom:14px; left:24%;}
+
+  .bt-about{padding:30px 0 110px;}
+  .bt-about-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:72px; align-items:center;}
+  .bt-media{position:relative;}
+  .bt-plank{border-radius:22px; overflow:hidden; aspect-ratio:560/434; background:radial-gradient(90% 80% at 30% 22%, #2F6F47, #134029 55%, #0A2218); border:1px solid rgba(255,255,255,.07);}
+  .loc{position:absolute; top:16px; left:16px; background:#fff; color:#12281B; border-radius:999px; padding:7px 14px; font-size:.78rem; font-weight:500; display:inline-flex; gap:7px; align-items:center;}
+  .bt-stat{position:absolute; right:-26px; bottom:-36px; width:178px; padding:22px 22px 24px; border-radius:18px; background:#164A2E; border:1px solid rgba(255,255,255,.1); box-shadow:0 18px 40px rgba(0,0,0,.45);}
+  .bt-stat strong{display:block; font-family:'Playfair Display','Fraunces',Georgia,serif; font-weight:500; font-size:2.7rem; line-height:1; color:var(--gold);}
+  .bt-stat span{font-size:.82rem; color:rgba(238,241,230,.82); display:block; margin-top:4px;}
+  .bt-stat .squig{width:64px; margin:12px 0 0;}
+  .bt-copy h2{font-size:clamp(2rem,3.6vw,3.1rem); line-height:1.15; margin-bottom:.5em;}
+  .bt-copy p{max-width:48ch; margin-bottom:1.6em;}
+  .bt-gold{display:inline-block; background:var(--gold); color:#1A2410; padding:14px 34px; border-radius:999px; font-weight:600; text-decoration:none; transition:background-color var(--dur) var(--ease);}
+  .bt-gold:hover{background:#F0CB66;}
+
+  .bt-head{text-align:center; margin-bottom:56px;}
+  .bt-head h2{font-size:clamp(2rem,3.8vw,3.1rem); line-height:1.15; margin-bottom:.3em;}
+  .bt-head p{color:var(--muted); max-width:56ch; margin:0 auto;}
+  .bt-collection{padding:20px 0 110px;}
+  .bt-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px; align-items:start;}
+  .bt-card{position:relative; min-height:450px; border-radius:22px; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; background:radial-gradient(90% 70% at 50% 22%, #21603D 0%, #0F3321 60%, #091F15 100%); border:1px solid rgba(255,255,255,.07);}
+  .bt-card:nth-child(even){margin-top:36px;}
+  .bt-img{position:absolute; left:0; right:0; top:0; height:62%; display:flex; justify-content:center;}
+  .bt-img .sw{width:42%; transform-origin:50% 0; animation:swingSoft 6s ease-in-out infinite alternate;}
+  .bt-img .sw::before{content:""; display:block; width:1px; height:58px; margin:0 auto; background:linear-gradient(#d7ddd3,#6c776b);}
+  .bt-img .kc{display:block; width:100%; height:auto; margin-top:-4px; filter:drop-shadow(0 18px 16px rgba(0,0,0,.5));}
+  .bt-card .rate{position:absolute; top:14px; left:14px; z-index:2; background:#fff; color:#12281B; font-size:.7rem; font-weight:600; padding:5px 11px; border-radius:999px;}
+  .quick{position:absolute; top:12px; right:12px; z-index:2; width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,.92); color:#12281B; border:none; font-size:1.25rem; line-height:1; display:grid; place-items:center; cursor:pointer;}
+  .bt-cap{position:relative; z-index:2; padding:60px 20px 20px; background:linear-gradient(180deg, rgba(6,18,12,0), rgba(6,18,12,.9) 58%);}
+  .bt-card:nth-child(2) .bt-cap{margin:0 14px 14px; padding:18px; border-radius:16px; background:#6B7B34;}
+  .bt-cap h3{font-family:'Playfair Display','Fraunces',Georgia,serif; font-weight:500; font-size:1.25rem; color:#fff; margin:0 0 4px;}
+  .bt-cap p{color:rgba(238,241,230,.8); font-size:.88rem; margin:0;}
+  .bt-cap .row{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:14px;}
+  .bt-cap .price{font-weight:600; color:var(--gold);}
+  .bt-card:nth-child(2) .price{color:#fff;}
+
+  .bt-marquee{background:var(--gold); color:#1A2410; overflow:hidden; padding:20px 0;}
+  .bt-marquee .track{display:flex; width:max-content; animation:marquee 36s linear infinite;}
+  .bt-marquee .grp{display:flex; gap:60px; padding-right:60px; align-items:center;}
+  .bt-marquee .it{display:inline-flex; align-items:center; gap:14px; font-weight:600; white-space:nowrap; font-size:.98rem;}
+  .bt-marquee .it i{font-style:normal; font-size:.85rem; opacity:.7;}
+  @keyframes marquee{to{transform:translateX(-50%);}}
+
+  .bt-services{padding:110px 0;}
+  .bt-svcs{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  .bt-svc{border-radius:20px; padding:32px 24px 26px; background:linear-gradient(180deg,#0E2A1C,#0A1F15); border:1px solid rgba(255,255,255,.07); text-align:center; display:flex; flex-direction:column; align-items:center; transition:transform var(--dur) var(--ease), border-color var(--dur) var(--ease);}
+  .bt-svc.hl{background:linear-gradient(180deg,#1E5E3A,#134A2D);}
+  .bt-svc:hover{transform:translateY(-6px); border-color:rgba(227,185,75,.5);}
+  .bt-svc .ic{width:56px; height:56px; color:var(--gold); margin-bottom:16px;}
+  .bt-svc h3{font-family:'Playfair Display','Fraunces',Georgia,serif; font-weight:500; font-size:1.18rem; color:#fff; margin-bottom:.5em;}
+  .bt-svc p{color:rgba(238,241,230,.74); font-size:.88rem; flex:1; margin-bottom:0;}
+  .more{display:inline-flex; align-items:center; gap:9px; color:var(--gold); font-size:.82rem; font-weight:500; text-decoration:none; margin-top:18px;}
+  .more .dot{width:22px; height:22px; border-radius:50%; background:var(--gold); color:#1A2410; display:grid; place-items:center; transition:transform var(--dur) var(--ease);}
+  .more:hover .dot{transform:translateX(4px);}
+
+  .bt-stats{padding:20px 0 120px;}
+  .bt-stats-grid{display:grid; grid-template-columns:.9fr 1.6fr; gap:48px; align-items:center;}
+  .bt-stats h2{font-size:clamp(1.8rem,3vw,2.6rem); line-height:1.2; max-width:12ch; margin:0;}
+  .nums{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  .nums strong{display:block; font-family:'Playfair Display','Fraunces',Georgia,serif; font-weight:500; font-size:clamp(2rem,3.6vw,3.1rem); color:var(--gold); line-height:1; margin-bottom:8px;}
+  .nums span{font-size:.82rem; color:var(--muted);}
+
+  @media (max-width:1000px){
+    .bt-grid{grid-template-columns:1fr 1fr;} .bt-card:nth-child(even){margin-top:0;}
+    .bt-svcs{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:860px){
+    .bt-card-green{grid-template-columns:1fr; padding:34px 26px; min-height:0;}
+    .bt-right{min-height:300px;} .bt-big{right:4%; top:-20px; width:160px;}
+    .pill.p1{top:10px; left:0;} .pill.p2{top:46%; left:0;} .pill.p3{left:6%; bottom:6px;}
+    .bt-about-grid{grid-template-columns:1fr; gap:64px;} .bt-stat{right:10px;}
+    .bt-stats-grid{grid-template-columns:1fr;} .nums{grid-template-columns:1fr 1fr; row-gap:30px;}
+  }
+  @media (max-width:700px){
+    .bt-hero{padding:150px 0 170px;}
+    .hang:not(:first-of-type){display:none;}
+    .hang:first-of-type{left:44% !important;}
+    .hang i{height:40px !important;}
+    .hang svg{width:42px !important;}
+  }
+  @media (max-width:560px){ .bt-grid, .bt-svcs{grid-template-columns:1fr;} }
+  @media (prefers-reduced-motion: reduce){
+    .hang, .bokeh, .bt-big, .bt-img .sw, .bt-marquee .track{animation:none !important;}
+  }
+
+  /* ===== Home: forest theme + Top Selling ===== */
+  body{--bg:#07140F; --bg-alt:#0B1F16; --fg:#EEF1E6; --muted:#A8B7A6; --line:rgba(238,241,230,.14); --card:#0E2A1C; --accent:#E3B94B; --accent-dark:#C99A2E; --green:#78A85F; --green-deep:#BFD9A8;}
+  h1,h2,h3{font-family:'Playfair Display','Fraunces',Georgia,serif; font-weight:500;}
+  .btn-primary{background:var(--gold); color:#1A2410;}
+  .btn-primary:hover{background:#F0CB66; color:#1A2410;}
+  footer{background:#040C08; color:var(--fg);}
+  footer a, footer .brand{color:var(--fg) !important;}
+  .swipe-thumb{color:#1A2410;}
+  .hero{margin-top:-76px; isolation:isolate; background:radial-gradient(120% 90% at 18% 8%, #134A2E 0%, #0A2418 46%, #06120D 100%);}
+  .hero-grid{padding-top:calc(clamp(56px,11vh,130px) + 76px);}
+  .hero::after{content:""; position:absolute; left:0; right:0; bottom:0; height:110px; z-index:2; pointer-events:none; background:linear-gradient(180deg, rgba(7,20,15,0), #07140F);}
+
+  .ts{padding:70px 0 110px;}
+  .ts-head{text-align:center; margin-bottom:50px;}
+  .ts-head h2{font-size:clamp(2.2rem,4.6vw,3.8rem); line-height:1.1; margin-bottom:.35em; color:#fff;}
+  .ts-head p{color:var(--muted); max-width:52ch; margin:0 auto 20px;}
+  .ts-stars{display:inline-flex; gap:12px; align-items:center; font-size:.85rem; color:var(--muted);}
+  .ts-stars b{color:#E0A81F; letter-spacing:3px; font-weight:400;}
+  .ts-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .ts-card{position:relative; border-radius:22px; overflow:hidden; min-height:430px; display:flex; flex-direction:column; justify-content:flex-end; background:radial-gradient(90% 70% at 50% 28%, #1F6B43 0%, #0F3A26 58%, #0A2218 100%); border:1px solid rgba(255,255,255,.07); transition:transform var(--dur) var(--ease), border-color var(--dur) var(--ease);}
+  .ts-card:hover{transform:translateY(-6px); border-color:rgba(227,185,75,.45);}
+  .ts-card .art{position:absolute; left:0; right:0; top:0; bottom:92px; display:flex; align-items:flex-end; justify-content:center; padding:0 12% 0;}
+  .ts-card .art svg{display:block; width:100%; height:auto; filter:drop-shadow(0 16px 14px rgba(0,0,0,.45)); animation:tsFloat 6s ease-in-out infinite alternate;}
+  @keyframes tsFloat{from{transform:translateY(0);} to{transform:translateY(-8px);}}
+  .ts-card::before{content:""; position:absolute; left:0; right:0; bottom:92px; height:16px; background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,0)); z-index:1;}
+  .ts-card .art.hang-art{align-items:flex-start;}
+  .ts-card .art .sw{width:38%; margin:0 auto; transform-origin:50% 0; animation:swing 6s ease-in-out infinite alternate;}
+  .ts-card .art .sw::before{content:""; display:block; width:1px; height:46px; margin:0 auto; background:linear-gradient(#d7ddd3,#6c776b);}
+  .ts-card .art .sw svg{animation:none; margin-top:-4px;}
+  .ts-rank{position:absolute; top:14px; right:14px; z-index:3; width:32px; height:32px; border-radius:50%; background:rgba(0,0,0,.45); border:1px solid rgba(255,255,255,.25); color:#fff; font-size:.8rem; display:grid; place-items:center;}
+  .ts-foot{position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:0 20px; height:92px; background:rgba(4,12,8,.55); backdrop-filter:blur(4px);}
+  .ts-foot h3{font-size:1.08rem; color:#fff; margin:0 0 2px;}
+  .ts-foot small{color:var(--muted); font-size:.82rem;}
+  .ts-bag{width:42px; height:42px; border-radius:50%; background:var(--gold); color:#1A2410; display:grid; place-items:center; flex:none; text-decoration:none; transition:transform var(--dur) var(--ease);}
+  .ts-bag:hover{transform:scale(1.08);}
+  .ts-card.ts-text{justify-content:center; padding:34px 30px; background:linear-gradient(160deg,#1E5E3A,#0F3A26);}
+  .ts-card.ts-text::before{display:none;}
+  .ts-text h3{font-size:clamp(1.5rem,2.4vw,2rem); line-height:1.2; color:#fff; margin-bottom:.5em;}
+  .ts-text p{color:rgba(238,241,230,.82); margin-bottom:1.4em;}
+  .ts-text .btn{align-self:flex-start;}
+  @media (max-width:900px){ .ts-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:560px){ .ts-grid{grid-template-columns:1fr;} .ts-card{min-height:380px;} .ts{padding:40px 0 80px;} }
+  @media (prefers-reduced-motion: reduce){ .ts-card .art svg, .ts-card .art .sw{animation:none !important;} }
+  .confirm{line-height:1.65;}
+  .confirm .linklike{background:none; border:none; padding:0; font:inherit; color:var(--accent); text-decoration:underline; cursor:pointer;}
+  .confirm .mailto-addr{color:var(--fg);}
+</style>
+</head>
+<body class="forest">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="teakG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C58F5B"/><stop offset=".55" stop-color="#9A6234"/><stop offset="1" stop-color="#6E3F1D"/></linearGradient>
+    <linearGradient id="metalG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EEF1EF"/><stop offset=".5" stop-color="#A9B1AE"/><stop offset="1" stop-color="#6F7774"/></linearGradient>
+    <linearGradient id="glossG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".30"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></linearGradient>
+    <pattern id="grainP" width="46" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-6)"><path d="M0 4C12 1 24 8 46 3M0 11C14 8 28 14 46 10" fill="none" stroke="#4A2A10" stroke-opacity=".3" stroke-width="1.1"/><path d="M0 7.5C16 6 30 10 46 7" fill="none" stroke="#E9C698" stroke-opacity=".16" stroke-width=".9"/></pattern>
+    <g id="kcTop"><circle cx="60" cy="24" r="17" fill="none" stroke="url(#metalG)" stroke-width="4"/><ellipse cx="60" cy="60" rx="5.5" ry="10" fill="none" stroke="url(#metalG)" stroke-width="3"/><ellipse cx="60" cy="92" rx="5.5" ry="24" fill="none" stroke="url(#metalG)" stroke-width="3"/></g>
+    <g id="kcHole"><circle cx="60" cy="122" r="7.5" fill="#1B0F06" fill-opacity=".9"/><circle cx="60" cy="122" r="10" fill="none" stroke="#4A2A10" stroke-opacity=".5" stroke-width="1.5"/></g>
+    <circle id="shRound" cx="60" cy="162" r="56"/>
+    <path id="shLeaf" d="M60 104C14 126 2 186 60 228C118 186 106 126 60 104Z"/>
+    <rect id="shBlock" x="24" y="106" width="72" height="116" rx="12"/>
+    <rect id="shTag" x="14" y="106" width="92" height="112" rx="14"/>
+    <symbol id="kc-round" viewBox="0 0 120 232"><use href="#kcTop"/><use href="#shRound" fill="url(#teakG)"/><use href="#shRound" fill="url(#grainP)"/><use href="#shRound" fill="url(#glossG)"/><use href="#kcHole"/></symbol>
+    <symbol id="kc-leaf" viewBox="0 0 120 232"><use href="#kcTop"/><use href="#shLeaf" fill="url(#teakG)"/><use href="#shLeaf" fill="url(#grainP)"/><path d="M60 140V220M60 168L38 152M60 168L82 152M60 194L34 176M60 194L86 176" fill="none" stroke="#3E2210" stroke-opacity=".32" stroke-width="2" stroke-linecap="round"/><use href="#shLeaf" fill="url(#glossG)"/><use href="#kcHole"/></symbol>
+    <symbol id="kc-block" viewBox="0 0 120 232"><use href="#kcTop"/><use href="#shBlock" fill="url(#teakG)"/><use href="#shBlock" fill="url(#grainP)"/><use href="#shBlock" fill="url(#glossG)"/><use href="#kcHole"/></symbol>
+    <symbol id="kc-tag" viewBox="0 0 120 232"><use href="#kcTop"/><use href="#shTag" fill="url(#teakG)"/><use href="#shTag" fill="url(#grainP)"/><text x="61" y="190" text-anchor="middle" font-family="Georgia,serif" font-size="58" fill="#E9C698" fill-opacity=".35">A</text><text x="60" y="188" text-anchor="middle" font-family="Georgia,serif" font-size="58" fill="#3A200D" fill-opacity=".62">A</text><use href="#shTag" fill="url(#glossG)"/><use href="#kcHole"/></symbol>
+  </defs>
+</svg>
+
+
+<header class="nav">
+  <div class="wrap wrap-wide">
+    <a href="#" class="brand" data-nav data-view="home"><span>Living</span>Soil</a>
+    <nav class="links" aria-label="Primary">
+      <a href="#top" data-nav data-view="home" aria-current="page">Home</a>
+      <a href="#wood-top" data-nav data-view="wood">Woodworking</a>
+      <a href="#about" data-nav data-view="home" data-anchor="about">About</a>
+      <a href="#contact" data-nav data-view="home" data-anchor="contact">Contact</a>
+      <span class="nav-indicator" id="navIndicator"></span>
+    </nav>
+    <button class="cart-badge" id="cartBadge" type="button">Cart · 0</button>
+    <a href="#contact" data-nav data-view="home" data-anchor="contact" class="btn btn-pill btn-dark nav-cta">Get a Quote</a>
+    <button class="burger" id="burgerBtn" aria-expanded="false" aria-controls="mobilePanel">Menu</button>
+  </div>
+  <div class="mobile-panel" id="mobilePanel">
+    <a href="#top" data-nav data-view="home">Home</a>
+    <a href="#wood-top" data-nav data-view="wood">Woodworking</a>
+    <a href="#about" data-nav data-view="home" data-anchor="about">About</a>
+    <a href="#contact" data-nav data-view="home" data-anchor="contact">Contact</a>
+  </div>
+</header>
+
+<main>
+<div id="home-view">
+
+  <section class="hero" id="top">
+    <div class="bt-scene" aria-hidden="true">
+      <span class="bokeh" style="left:8%;top:62%;width:130px;height:130px;--bd:5s"></span>
+      <span class="bokeh" style="left:38%;top:12%;width:90px;height:90px;--bd:6.5s"></span>
+      <span class="bokeh" style="left:58%;top:30%;width:120px;height:120px;--bd:7s"></span>
+      <span class="bokeh" style="left:76%;top:6%;width:100px;height:100px;--bd:5.5s"></span>
+      <span class="bokeh" style="left:90%;top:52%;width:80px;height:80px;--bd:6s"></span>
+    </div>
+    <div class="wrap wrap-wide hero-grid">
+      <h1>Red soil for foundations that hold.</h1>
+      <p class="lead">Natural red soil, stone, and rock — quarried, screened, and delivered for builders, landscapers, and growers who want material they can trust.</p>
+      <div class="actions">
+        <a href="#contact" data-nav data-view="home" data-anchor="contact" class="btn btn-pill btn-dark">Get a Quote</a>
+        <a href="#products" data-nav data-view="home" data-anchor="products" class="btn btn-pill btn-outline">See Materials</a>
+      </div>
+    </div>
+    <div class="hero-art" id="heroArt" role="img" aria-label="A mound of red soil with a green sprout, wildflowers and stones">
+      <svg viewBox="0 0 800 560" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+        <defs>
+          <linearGradient id="soilGrad" x1=".1" y1="0" x2=".9" y2="1"><stop offset="0" stop-color="#CF6B4C"/><stop offset=".45" stop-color="#A6432C"/><stop offset="1" stop-color="#64230F"/></linearGradient>
+          <linearGradient id="lightGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE9D2" stop-opacity=".3"/><stop offset=".5" stop-color="#FFE9D2" stop-opacity="0"/><stop offset="1" stop-color="#1A0600" stop-opacity=".42"/></linearGradient>
+          <radialGradient id="grassGrad" cx=".5" cy=".15" r=".95"><stop offset="0" stop-color="#9DC274"/><stop offset=".6" stop-color="#5E8B4A"/><stop offset="1" stop-color="#3D6238"/></radialGradient>
+          <linearGradient id="leafRG" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#47773A"/><stop offset="1" stop-color="#AAD27C"/></linearGradient>
+          <linearGradient id="leafLG" x1="1" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#47773A"/><stop offset="1" stop-color="#9CC76F"/></linearGradient>
+          <linearGradient id="stoneA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D8CDB6"/><stop offset="1" stop-color="#8C816C"/></linearGradient>
+          <linearGradient id="stoneB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9C9180"/><stop offset="1" stop-color="#4B443A"/></linearGradient>
+          <linearGradient id="stoneC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#DDB991"/><stop offset="1" stop-color="#96694A"/></linearGradient>
+          <clipPath id="moundClip"><use href="#moundShape"/></clipPath>
+          <filter id="rough" x="-10%" y="-20%" width="120%" height="140%"><feTurbulence type="fractalNoise" baseFrequency=".022 .045" numOctaves="3" seed="6" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="46" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <filter id="blotch"><feTurbulence type="fractalNoise" baseFrequency=".011 .016" numOctaves="2" seed="5"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .12  0 0 0 0 .05  0 0 0 1.5 -.55"/></filter>
+          <filter id="grainDark"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 .14  0 0 0 0 .05  0 0 0 0 .02  0 0 0 1.7 -.78"/></filter>
+          <filter id="grainLight"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="9"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 .82  0 0 0 0 .66  0 0 0 1.6 -.86"/></filter>
+        </defs>
+        <g class="rise">
+          <path id="moundShape" d="M-460 560C-340 548 -92 504 0 478C92 452 214 384 330 302C410 246 474 207 544 203C622 199 704 252 800 336V560Z" fill="url(#soilGrad)"/>
+          <g clip-path="url(#moundClip)">
+            <rect x="-460" width="1260" height="560" filter="url(#blotch)" opacity=".7"/>
+            <rect x="-460" width="1260" height="560" filter="url(#grainDark)" opacity=".65"/>
+            <rect x="-460" width="1260" height="560" filter="url(#grainLight)" opacity=".5"/>
+            <g filter="url(#rough)">
+              <ellipse cx="560" cy="168" rx="330" ry="124" fill="url(#grassGrad)"/>
+              <ellipse cx="716" cy="292" rx="104" ry="46" fill="url(#grassGrad)"/>
+              <ellipse cx="372" cy="262" rx="70" ry="30" fill="url(#grassGrad)"/>
+            </g>
+            <rect x="-460" width="1260" height="560" fill="url(#lightGrad)"/>
+          </g>
+          <g id="scatter"></g>
+          <ellipse cx="548" cy="211" rx="30" ry="6" fill="#2A0C04" opacity=".28"/>
+          <g transform="translate(548 208)">
+            <g class="sway">
+              <path class="stem" pathLength="1" d="M0 6C-6 -32 8 -76 2 -116" fill="none" stroke="#6C9A4E" stroke-width="7" stroke-linecap="round"/>
+              <g class="leaf leaf-r"><path d="M2 -116C12 -166 64 -196 108 -184C106 -142 62 -110 2 -116Z" fill="url(#leafRG)"/><path d="M5 -119C36 -143 70 -166 102 -181" fill="none" stroke="#E5F2C9" stroke-opacity=".55" stroke-width="1.6" stroke-linecap="round"/></g>
+              <g class="leaf leaf-l"><path d="M0 -116C-8 -152 -48 -174 -80 -166C-76 -134 -40 -112 0 -116Z" fill="url(#leafLG)"/><path d="M-2 -119C-26 -138 -52 -154 -74 -163" fill="none" stroke="#E5F2C9" stroke-opacity=".55" stroke-width="1.6" stroke-linecap="round"/></g>
+            </g>
+            <ellipse cx="0" cy="8" rx="19" ry="6.5" fill="#A8472E"/>
+            <ellipse cx="-4" cy="6" rx="9" ry="3" fill="#C9694B" opacity=".6"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <section class="ts" id="top-selling">
+    <div class="wrap wrap-wide">
+      <header class="ts-head">
+        <h2>Top Selling Materials</h2>
+        <p>The materials our builders and landscapers reorder most — quarried, graded and delivered with consistent quality.</p>
+        <span class="ts-stars"><b>★★★★★</b> Trusted by builders and landscapers</span>
+      </header>
+      <div class="ts-grid">
+        <article class="ts-card"><span class="ts-rank">1</span>
+          <div class="art"><svg viewBox="0 0 200 170" aria-hidden="true"><defs><clipPath id="pileClip"><path d="M6 160C28 126 62 80 100 66C138 80 172 126 194 160Z"/></clipPath></defs><ellipse cx="100" cy="161" rx="92" ry="8" fill="#000" opacity=".3"/><path d="M6 160C28 126 62 80 100 66C138 80 172 126 194 160Z" fill="url(#soilGrad)"/><g clip-path="url(#pileClip)"><rect width="200" height="170" filter="url(#grainDark)" opacity=".7"/><rect width="200" height="170" filter="url(#grainLight)" opacity=".5"/><rect width="200" height="170" fill="url(#lightGrad)"/></g></svg></div>
+          <div class="ts-foot"><div><h3>Red Soil</h3><small>Request Quote</small></div><a class="ts-bag" href="#contact" data-nav data-view="home" data-anchor="contact" aria-label="Request a quote for Red Soil"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></a></div></article>
+        <article class="ts-card"><span class="ts-rank">2</span>
+          <div class="art"><svg viewBox="0 0 200 170" aria-hidden="true"><ellipse cx="100" cy="161" rx="88" ry="8" fill="#000" opacity=".3"/><g id="heapStones"></g></svg></div>
+          <div class="ts-foot"><div><h3>Decorative Stones</h3><small>Request Quote</small></div><a class="ts-bag" href="#contact" data-nav data-view="home" data-anchor="contact" aria-label="Request a quote for Decorative Stones"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></a></div></article>
+        <article class="ts-card"><span class="ts-rank">3</span>
+          <div class="art"><svg viewBox="0 0 200 170" aria-hidden="true"><ellipse cx="100" cy="161" rx="88" ry="8" fill="#000" opacity=".3"/><g id="heapPebbles"></g></svg></div>
+          <div class="ts-foot"><div><h3>River Pebbles</h3><small>Request Quote</small></div><a class="ts-bag" href="#contact" data-nav data-view="home" data-anchor="contact" aria-label="Request a quote for River Pebbles"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></a></div></article>
+        <article class="ts-card"><span class="ts-rank">4</span>
+          <div class="art"><svg viewBox="0 0 200 170" aria-hidden="true"><ellipse cx="100" cy="161" rx="90" ry="9" fill="#000" opacity=".32"/><g id="heapBoulders"></g></svg></div>
+          <div class="ts-foot"><div><h3>Garden Boulders</h3><small>Request Quote</small></div><a class="ts-bag" href="#contact" data-nav data-view="home" data-anchor="contact" aria-label="Request a quote for Garden Boulders"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></a></div></article>
+        <article class="ts-card ts-text">
+          <h3>Built To Last, Sourced With Care</h3>
+          <p>Every load is graded by hand and delivered to site on your schedule — from a single load to full-site supply.</p>
+          <a class="btn btn-pill btn-outline" href="#contact" data-nav data-view="home" data-anchor="contact">Get a Quote</a></article>
+        <article class="ts-card"><span class="ts-rank">5</span>
+          <div class="art hang-art"><div class="sw"><svg viewBox="0 0 120 232" aria-hidden="true"><use href="#kc-leaf"/></svg></div></div>
+          <div class="ts-foot"><div><h3>Teak Keychains</h3><small>From $10</small></div><a class="ts-bag" href="#wood-top" data-nav data-view="wood" aria-label="Shop teak keychains"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></a></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap two-col">
+      <div>
+        <h2>Sourced from real ground, not a warehouse.</h2>
+        <p class="muted">We work with a small network of quarries and land owners, screening and grading every load by hand. What you get is soil and stone in the condition nature made it — no additives, no shortcuts, just material that behaves the way it should on site.</p>
+      </div>
+      <div class="tex tex-stone" role="img" aria-label="Texture of natural stone"></div>
+    </div>
+  </section>
+
+  <section class="band" id="products">
+    <div class="wrap">
+      <div class="head-row">
+        <h2>What we supply</h2>
+        <p class="muted" style="max-width:34ch">Priced by load and location — tell us the job and we'll quote it.</p>
+      </div>
+      <div class="grid3">
+        <div class="p-card">
+          <div class="tex tex-soil"></div>
+          <div class="body">
+            <h3>Red Soil</h3>
+            <p class="muted">Iron-rich topsoil and fill, screened for consistency. Good for lawns, beds, and grading.</p>
+            <div class="row"><a href="#contact" data-nav data-view="home" data-anchor="contact" class="btn btn-outline btn-small">Request Quote</a></div>
+          </div>
+        </div>
+        <div class="p-card">
+          <div class="tex tex-stone"></div>
+          <div class="body">
+            <h3>Decorative Stones</h3>
+            <p class="muted">Polished and natural-finish stone in a range of sizes, for paths, borders, and water features.</p>
+            <div class="row"><a href="#contact" data-nav data-view="home" data-anchor="contact" class="btn btn-outline btn-small">Request Quote</a></div>
+          </div>
+        </div>
+        <div class="p-card">
+          <div class="tex tex-rock"></div>
+          <div class="body">
+            <h3>Rocks</h3>
+            <p class="muted">Larger natural rock for retaining walls, accents, and erosion control.</p>
+            <div class="row"><a href="#contact" data-nav data-view="home" data-anchor="contact" class="btn btn-outline btn-small">Request Quote</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head-row"><h2>Why builders order from us</h2></div>
+      <div class="why-grid">
+        <div class="why-item"><span class="dot d1"></span><div><h3>Quality you can see</h3><p>Every load is screened before it leaves the yard.</p></div></div>
+        <div class="why-item"><span class="dot d2"></span><div><h3>Bulk orders welcome</h3><p>From a single load to full-site supply.</p></div></div>
+        <div class="why-item"><span class="dot d3"></span><div><h3>Delivery to site</h3><p>We schedule around your timeline, not ours.</p></div></div>
+        <div class="why-item"><span class="dot d4"></span><div><h3>Sourced responsibly</h3><p>Local quarries and land, nothing shipped in blind.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="head-row"><h2>Material gallery</h2></div>
+      <div class="gal">
+        <figure><div class="tex tex-soil"></div><figcaption>Red Soil</figcaption></figure>
+        <figure><div class="tex tex-stone"></div><figcaption>Natural Stone</figcaption></figure>
+        <figure><div class="tex tex-rock"></div><figcaption>River Rock</figcaption></figure>
+        <figure><div class="tex tex-wood"></div><figcaption>Teak Grain</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head-row"><h2>What customers say</h2></div>
+      <div class="quotes">
+        <blockquote><p>LivingSoil's red soil held up better than anything else we tried for the new beds — consistent, and no debris to sort out.</p><cite>— Priya R., Landscape Contractor</cite></blockquote>
+        <blockquote><p>Ordered rock for a retaining wall and it arrived exactly as described, on the day promised.</p><cite>— Thomas K., Site Manager</cite></blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <h2>Get in touch</h2>
+        <p class="muted">Tell us what you're building and where, and we'll put together a quote — including delivery.</p>
+        <p class="muted">hello@livingsoil.example<br>+91 00000 00000<br>Mon–Sat, 9am–6pm</p>
+      </div>
+      <div>
+        <form id="contactForm">
+          <div class="field"><label for="name">Name</label><input id="name" required></div>
+          <div class="field"><label for="email">Email</label><input id="email" type="email" required></div>
+          <div class="field"><label for="message">Message</label><textarea id="message" required placeholder="What material, how much, and where it's going"></textarea></div>
+          <button class="btn btn-primary" type="submit">Send Message</button>
+        </form>
+        <div class="confirm" id="confirmMsg"><strong>One last step — your email app should be opening.</strong> Your message is already filled in; just press Send.<br><span class="muted">Nothing opened? <button type="button" class="linklike" id="mailAgain">Open it again</button> or <button type="button" class="linklike" id="copyMsg">copy the message</button> and email <span class="mailto-addr">hello@livingsoil.example</span>.</span></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div id="wood-view" hidden>
+
+  <section class="bt-hero" id="wood-top">
+    <div class="bt-scene" aria-hidden="true">
+      <span class="bokeh" style="left:6%;top:34%;width:130px;height:130px;--bd:5s"></span>
+      <span class="bokeh" style="left:24%;top:12%;width:90px;height:90px;--bd:6.5s"></span>
+      <span class="bokeh" style="left:41%;top:58%;width:70px;height:70px;--bd:4.5s"></span>
+      <span class="bokeh" style="left:63%;top:16%;width:110px;height:110px;--bd:7s"></span>
+      <span class="bokeh" style="left:80%;top:48%;width:140px;height:140px;--bd:5.5s"></span>
+      <span class="bokeh" style="left:91%;top:14%;width:80px;height:80px;--bd:6s"></span>
+      <div class="hang" style="left:4%;--cord:170px;--w:74px;--sd:6.8s;--sl:-1.2s"><i></i><svg viewBox="0 0 120 232"><use href="#kc-leaf"/></svg></div>
+      <div class="hang" style="left:12%;--cord:90px;--w:62px;--sd:5.9s;--sl:-3s"><i></i><svg viewBox="0 0 120 232"><use href="#kc-round"/></svg></div>
+      <div class="hang far" style="left:21%;--cord:210px;--w:54px;--sd:7.4s;--sl:-2s"><i></i><svg viewBox="0 0 120 232"><use href="#kc-block"/></svg></div>
+      <div class="hang far" style="left:34%;--cord:60px;--w:46px;--sd:6.1s;--sl:-4s"><i></i><svg viewBox="0 0 120 232"><use href="#kc-tag"/></svg></div>
+      <div class="hang far" style="left:66%;--cord:70px;--w:46px;--sd:6.6s;--sl:-1s"><i></i><svg viewBox="0 0 120 232"><use href="#kc-round"/></svg></div>
+      <div class="hang far" style="left:77%;--cord:200px;--w:58px;--sd:7.2s;--sl:-2.5s"><i></i><svg viewBox="0 0 120 232"><use href="#kc-tag"/></svg></div>
+      <div class="hang" style="left:85%;--cord:100px;--w:68px;--sd:6.2s;--sl:-4s"><i></i><svg viewBox="0 0 120 232"><use href="#kc-block"/></svg></div>
+      <div class="hang" style="left:93%;--cord:160px;--w:76px;--sd:7s;--sl:-.5s"><i></i><svg viewBox="0 0 120 232"><use href="#kc-leaf"/></svg></div>
+    </div>
+    <div class="bt-hero-inner">
+      <h1>Heirloom Teak, Crafted<br>For Everyday Carry.</h1>
+      <svg class="squig" viewBox="0 0 300 14" aria-hidden="true"><path pathLength="1" d="M4 9C60 3 120 12 180 6S260 8 296 5" fill="none" stroke="#E3B94B" stroke-width="5" stroke-linecap="round"/></svg>
+      <p>Each LivingSoil keychain is shaped, sanded and oiled by hand from responsibly sourced teak — a considered object, made to be carried for years.</p>
+      <div class="bt-cta">
+        <a href="#wood-craft" data-nav data-view="wood" data-anchor="wood-craft" class="bt-ghost">Our Craft Process <span class="ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></a>
+        <a href="tel:+910000000000" class="bt-call"><span class="ph"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span><span><small>Call Us Now:</small><b>+91 00000 00000</b></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bt-feature" id="wood-feature">
+    <div class="wrap">
+      <div class="bt-card-green">
+        <div class="bt-clip"><span class="olive"></span></div>
+        <div class="bt-left">
+          <span class="bt-rate"><b>★★★★★</b> (5/5)</span>
+          <p class="bt-quote">The finish is exceptional. Each keychain carries the warmth of genuine teak and has remained flawless after months of daily use — a thoughtful, beautifully made piece.</p>
+          <div class="bt-person"><span class="av">MR</span><div><strong>Meera Raghavan</strong><small>Verified Customer</small></div></div>
+        </div>
+        <div class="bt-right">
+          <div class="bt-big"><svg viewBox="0 0 120 232" aria-hidden="true" style="display:block;width:100%;height:auto"><use href="#kc-leaf"/></svg></div>
+          <span class="pill p1"><i></i>Hand-Finished Detailing</span>
+          <span class="pill p2"><i></i>Responsibly Sourced Teak</span>
+          <span class="pill p3"><i></i>Dispatched Within 48 Hours</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bt-about" id="wood-craft">
+    <div class="wrap bt-about-grid">
+      <div class="bt-media">
+        <div class="bt-plank">
+          <svg viewBox="0 0 560 434" aria-hidden="true" style="width:100%;height:100%;display:block">
+            <g style="filter:drop-shadow(0 16px 14px rgba(0,0,0,.45))">
+              <g transform="rotate(-11 100 180)"><use href="#kc-round" x="38" y="70" width="124" height="238"/></g>
+              <g transform="rotate(7 250 170)"><use href="#kc-leaf" x="188" y="36" width="124" height="238"/></g>
+              <g transform="rotate(-5 390 190)"><use href="#kc-block" x="330" y="82" width="124" height="238"/></g>
+              <g transform="rotate(10 490 200)"><use href="#kc-tag" x="436" y="40" width="112" height="216"/></g>
+            </g>
+          </svg>
+        </div>
+        <span class="loc"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#C99A2E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>Handcrafted In Small Batches</span>
+        <div class="bt-stat"><strong>10+</strong><span>Years of<br>Craftsmanship</span><svg class="squig" viewBox="0 0 300 14" aria-hidden="true"><path pathLength="1" d="M4 9C60 3 120 12 180 6S260 8 296 5" fill="none" stroke="#E3B94B" stroke-width="7" stroke-linecap="round"/></svg></div>
+      </div>
+      <div class="bt-copy">
+        <h2>Where Craft Finds Its Character.</h2>
+        <p class="muted">Our woodworking studio produces keychains exclusively from responsibly sourced teak, shaped and sanded by hand and sealed in a natural oil finish. Every piece is individually inspected, so the grain and tone you receive is entirely its own — made to be carried for years, not seasons.</p>
+        <a href="#wood-services" data-nav data-view="wood" data-anchor="wood-services" class="bt-gold">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bt-collection" id="wood-products">
+    <div class="wrap">
+      <header class="bt-head"><h2>Our Signature Collection</h2><p>Four considered designs, each finished by hand in natural teak oil and individually inspected before dispatch.</p></header>
+      <div class="bt-grid">
+        <article class="bt-card">
+          <div class="bt-img"><div class="sw"><svg class="kc" viewBox="0 0 120 232" aria-hidden="true"><use href="#kc-round"/></svg></div></div>
+          <span class="rate"><b>★★★★★</b> (5/5)</span><button class="quick" type="button" aria-label="Quick add Round Cut">+</button>
+          <div class="bt-cap"><h3>Round Cut</h3><p>A polished disc, sanded to a soft edge.</p>
+            <div class="row"><span class="price">$12</span><button class="btn btn-primary btn-small add-cart" data-id="round" data-name="Round Cut" data-price="12">Add to Cart</button><div class="stepper" data-id="round" hidden><button class="step-btn" type="button" data-act="dec">−</button><span class="step-qty">1</span><button class="step-btn" type="button" data-act="inc">+</button></div></div></div>
+        </article>
+        <article class="bt-card">
+          <div class="bt-img"><div class="sw"><svg class="kc" viewBox="0 0 120 232" aria-hidden="true"><use href="#kc-leaf"/></svg></div></div>
+          <span class="rate"><b>★★★★★</b> (5/5)</span><button class="quick" type="button" aria-label="Quick add Leaf Shape">+</button>
+          <div class="bt-cap"><h3>Leaf Shape</h3><p>A hand-carved silhouette that follows the grain.</p>
+            <div class="row"><span class="price">$14</span><button class="btn btn-primary btn-small add-cart" data-id="leaf" data-name="Leaf Shape" data-price="14">Add to Cart</button><div class="stepper" data-id="leaf" hidden><button class="step-btn" type="button" data-act="dec">−</button><span class="step-qty">1</span><button class="step-btn" type="button" data-act="inc">+</button></div></div></div>
+        </article>
+        <article class="bt-card">
+          <div class="bt-img"><div class="sw"><svg class="kc" viewBox="0 0 120 232" aria-hidden="true"><use href="#kc-block"/></svg></div></div>
+          <span class="rate"><b>★★★★★</b> (5/5)</span><button class="quick" type="button" aria-label="Quick add Classic Block">+</button>
+          <div class="bt-cap"><h3>Classic Block</h3><p>A compact block — our most requested form.</p>
+            <div class="row"><span class="price">$10</span><button class="btn btn-primary btn-small add-cart" data-id="block" data-name="Classic Block" data-price="10">Add to Cart</button><div class="stepper" data-id="block" hidden><button class="step-btn" type="button" data-act="dec">−</button><span class="step-qty">1</span><button class="step-btn" type="button" data-act="inc">+</button></div></div></div>
+        </article>
+        <article class="bt-card">
+          <div class="bt-img"><div class="sw"><svg class="kc" viewBox="0 0 120 232" aria-hidden="true"><use href="#kc-tag"/></svg></div></div>
+          <span class="rate"><b>★★★★★</b> (5/5)</span><button class="quick" type="button" aria-label="Quick add Initial Tag">+</button>
+          <div class="bt-cap"><h3>Initial Tag</h3><p>Engraved with your initial on request.</p>
+            <div class="row"><span class="price">$15</span><button class="btn btn-primary btn-small add-cart" data-id="tag" data-name="Initial Tag" data-price="15">Add to Cart</button><div class="stepper" data-id="tag" hidden><button class="step-btn" type="button" data-act="dec">−</button><span class="step-qty">1</span><button class="step-btn" type="button" data-act="inc">+</button></div></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="bt-marquee">
+    <div class="track">
+      <div class="grp"><span class="it"><i>✦</i>Responsibly Sourced Teak</span><span class="it"><i>✦</i>Hand-Finished In Small Batches</span><span class="it"><i>✦</i>Natural Oil Finish</span><span class="it"><i>✦</i>Engraving Available</span><span class="it"><i>✦</i>Dispatched Within 48 Hours</span></div>
+      <div class="grp" aria-hidden="true"><span class="it"><i>✦</i>Responsibly Sourced Teak</span><span class="it"><i>✦</i>Hand-Finished In Small Batches</span><span class="it"><i>✦</i>Natural Oil Finish</span><span class="it"><i>✦</i>Engraving Available</span><span class="it"><i>✦</i>Dispatched Within 48 Hours</span></div>
+    </div>
+  </div>
+
+  <section class="bt-services" id="wood-services">
+    <div class="wrap">
+      <header class="bt-head"><h2>Our Services</h2><p>Thoughtful additions to every order, from personal engraving to considered after-care.</p></header>
+      <div class="bt-svcs">
+        <article class="bt-svc hl">
+          <svg class="ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 38l2-8L32 10l6 6-20 20-8 2z"/><path d="M28 14l6 6"/><path d="M8 43h32"/></svg>
+          <h3>Custom Engraving</h3><p>Add an initial or short word to any piece. Include your note at checkout and it will be hand-engraved before dispatch.</p>
+          <a class="more" href="#contact" data-nav data-view="home" data-anchor="contact">Enquire Now <span class="dot"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></a>
+        </article>
+        <article class="bt-svc">
+          <svg class="ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16l18-8 18 8-18 8z"/><path d="M6 16v16l18 8 18-8V16"/><path d="M24 24v16"/></svg>
+          <h3>Bulk &amp; Corporate Orders</h3><p>Bespoke keychains for teams, events and gifting, produced to a consistent standard in any quantity.</p>
+          <a class="more" href="#contact" data-nav data-view="home" data-anchor="contact">Enquire Now <span class="dot"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></a>
+        </article>
+        <article class="bt-svc">
+          <svg class="ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="18" width="34" height="9" rx="2"/><path d="M10 27v14h28V27"/><path d="M24 18v23"/><path d="M24 18c-6 0-10-3-8-6s8-1 8 6c0-7 6-9 8-6s-2 6-8 6z"/></svg>
+          <h3>Gift Presentation</h3><p>Each keychain may be presented in considered packaging, suited to gifting for any occasion.</p>
+          <a class="more" href="#contact" data-nav data-view="home" data-anchor="contact">Enquire Now <span class="dot"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></a>
+        </article>
+        <article class="bt-svc">
+          <svg class="ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6C16 17 12 23 12 29a12 12 0 0 0 24 0c0-6-4-12-12-23z"/><path d="M18 30a6 6 0 0 0 6 6"/></svg>
+          <h3>Care &amp; Restoration</h3><p>Wipe clean with a dry cloth and recoat with mineral oil every few months. Keep clear of standing water.</p>
+          <a class="more" href="#contact" data-nav data-view="home" data-anchor="contact">Enquire Now <span class="dot"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bt-stats" id="wood-stats">
+    <div class="wrap bt-stats-grid">
+      <h2>Craftsmanship, Measured In Detail.</h2>
+      <div class="nums">
+        <div><strong data-count="12" data-suffix="k+">12k+</strong><span>Pieces Handcrafted</span></div>
+        <div><strong data-count="98" data-suffix="%">98%</strong><span>Customer Satisfaction</span></div>
+        <div><strong data-count="4" data-suffix="">4</strong><span>Signature Designs</span></div>
+        <div><strong data-count="48" data-suffix="h">48h</strong><span>Dispatch Time</span></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+</main>
+
+<div id="cart-view" class="overlay-page" hidden>
+  <div class="ov-header">
+    <button class="ov-back" id="cartBack" type="button" aria-label="Back"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <h2>Your Cart</h2>
+    <span style="width:40px"></span>
+  </div>
+  <div class="ov-body" id="cartBody"></div>
+  <div class="ov-footer">
+    <div class="swipe-pay" id="swipePay">
+      <div class="swipe-fill" id="swipeFill"></div>
+      <span class="swipe-label" id="swipeLabel">Cart is empty</span>
+      <button class="swipe-thumb" id="swipeThumb" type="button" aria-label="Slide to pay"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<div id="payment-view" class="overlay-page" hidden>
+  <div class="ov-header">
+    <button class="ov-back" id="paymentBack" type="button" aria-label="Back"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <h2>Payment</h2>
+    <span style="width:40px"></span>
+  </div>
+  <div class="ov-body">
+    <h3 class="pay-h3">Delivery Address</h3>
+    <form id="paymentForm">
+      <div class="field"><label for="payName">Full Name</label><input id="payName" required maxlength="50"></div>
+      <div class="field"><label for="payAddress">Address</label><input id="payAddress" required maxlength="100"></div>
+      <div class="field two-field">
+        <div><label for="payCity">City</label><input id="payCity" required maxlength="40"></div>
+        <div><label for="payZip">Postal Code</label><input id="payZip" required maxlength="6" inputmode="numeric" pattern="[0-9]*"></div>
+      </div>
+      <div class="field"><label for="payPhone">Phone</label><input id="payPhone" type="tel" required maxlength="10" inputmode="numeric" pattern="[0-9]*"></div>
+      <h3 class="pay-h3">Order Summary</h3>
+      <div id="orderSummary" class="order-summary"></div>
+      <h3 class="pay-h3">Card Details</h3>
+      <div class="field"><label for="cardNum">Card Number</label><input id="cardNum" required maxlength="16" inputmode="numeric" pattern="[0-9]*" placeholder="1234 5678 9012 3456"></div>
+      <div class="field two-field">
+        <div><label for="cardExp">Expiry</label><input id="cardExp" required maxlength="5" inputmode="numeric" pattern="[0-9]{2}/[0-9]{2}" placeholder="MM/YY"></div>
+        <div><label for="cardCvv">CVV</label><input id="cardCvv" required maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="123"></div>
+      </div>
+      <button type="submit" class="btn btn-primary" id="payBtn" style="width:100%;margin-top:8px;">Pay <span id="payAmount"></span></button>
+    </form>
+  </div>
+</div>
+
+<div id="orderComplete" class="ov-complete" hidden>
+  <div class="confetti-layer" id="confettiLayer"></div>
+  <div class="complete-card">
+    <div class="check-circle"><svg viewBox="0 0 52 52" width="52" height="52"><circle class="draw-circle" pathLength="1" cx="26" cy="26" r="24" fill="none" stroke="currentColor" stroke-width="3"/><path class="draw-check" pathLength="1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M15 27l7 7 15-15"/></svg></div>
+    <h2>Order Placed!</h2>
+    <p class="muted">Your LivingSoil order is confirmed — arriving in about 30 minutes.</p>
+    <button class="btn btn-primary" id="continueShopping" type="button">Continue Shopping</button>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <a href="#" class="brand" data-nav data-view="home" style="color:var(--bg)">LivingSoil</a>
+      <div class="foot-links">
+        <a href="#top" data-nav data-view="home">Home</a>
+        <a href="#products" data-nav data-view="home" data-anchor="products">Soil &amp; Stones</a>
+        <a href="#wood-top" data-nav data-view="wood">Woodworking</a>
+        <a href="#about" data-nav data-view="home" data-anchor="about">About</a>
+        <a href="#contact" data-nav data-view="home" data-anchor="contact">Contact</a>
+      </div>
+    </div>
+    <p class="foot-fine">hello@livingsoil.example · © 2026 LivingSoil. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var homeView = document.getElementById('home-view');
+  var woodView = document.getElementById('wood-view');
+  var navEls = document.querySelectorAll('[data-nav]');
+  var FADE = 300;
+
+  document.addEventListener('pointerdown', function(e){
+    var t = e.target.closest('button, a');
+    if(!t) return;
+    t.classList.remove('press-bounce');
+    t.classList.add('press-active');
+  });
+  function releasePress(e){
+    var t = e.target.closest('button, a');
+    if(!t) return;
+    if(t.classList.contains('press-active')){
+      t.classList.remove('press-active');
+      t.classList.add('press-bounce');
+      setTimeout(function(){ t.classList.remove('press-bounce'); }, 320);
+    }
+  }
+  document.addEventListener('pointerup', releasePress);
+  document.addEventListener('pointercancel', releasePress);
+
+  function setActive(view){
+    document.querySelectorAll('nav.links a[data-nav]').forEach(function(a){
+      if(a.dataset.view === view && !a.dataset.anchor){ a.setAttribute('aria-current','page'); }
+      else { a.removeAttribute('aria-current'); }
+    });
+    var first = document.querySelector('nav.links a[data-view="'+view+'"]');
+    var ind = document.getElementById('navIndicator');
+    if(first && ind){ ind.style.left = first.offsetLeft + 'px'; ind.style.width = first.offsetWidth + 'px'; }
+  }
+  setTimeout(function(){ setActive('home'); }, 0);
+
+  function scrollToTarget(anchor){
+    if(anchor){
+      var t = document.getElementById(anchor);
+      if(t){ t.scrollIntoView({behavior:'smooth', block:'start'}); return; }
+    }
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function showView(view, anchor){
+    var toShow = view === 'wood' ? woodView : homeView;
+    var toHide = view === 'wood' ? homeView : woodView;
+    toHide.classList.add('fading');
+    setTimeout(function(){
+      toHide.hidden = true;
+      toHide.classList.remove('fading');
+      toShow.hidden = false;
+      toShow.classList.add('fading');
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){ toShow.classList.remove('fading'); });
+      });
+      scrollToTarget(anchor);
+    }, FADE);
+    setActive(view);
+  }
+
+  navEls.forEach(function(el){
+    el.addEventListener('click', function(e){
+      e.preventDefault();
+      var view = el.dataset.view;
+      var anchor = el.dataset.anchor;
+      var currentlyWood = !woodView.hidden;
+      var switching = (view === 'wood' && !currentlyWood) || (view === 'home' && currentlyWood);
+      document.getElementById('mobilePanel').classList.remove('open');
+      document.getElementById('burgerBtn').setAttribute('aria-expanded','false');
+      if(switching){ showView(view, anchor); } else { scrollToTarget(anchor); }
+    });
+  });
+
+  document.getElementById('burgerBtn').addEventListener('click', function(){
+    var panel = document.getElementById('mobilePanel');
+    var open = panel.classList.toggle('open');
+    this.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  var CONTACT_EMAIL = 'hello@livingsoil.example', lastMail = null;
+  function buildMail(){
+    var name = document.getElementById('name').value.trim(), email = document.getElementById('email').value.trim(), msg = document.getElementById('message').value.trim();
+    var subject = 'LivingSoil enquiry from ' + name, body = ('Name: ' + name + '\nEmail: ' + email + '\n\n' + msg).slice(0, 1500);
+    return {url:'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body), text:'To: ' + CONTACT_EMAIL + '\nSubject: ' + subject + '\n\n' + body};
+  }
+  function openMail(url){ var a = document.createElement('a'); a.href = url; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove(); }
+  function copyText(t){
+    var legacy = function(){ var ta = document.createElement('textarea'); ta.value = t; ta.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); }catch(err){} ta.remove(); };
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).catch(legacy); } else { legacy(); }
+  }
+  document.getElementById('mailAgain').addEventListener('click', function(){ if(lastMail){ openMail(lastMail.url); } });
+  document.getElementById('copyMsg').addEventListener('click', function(){
+    if(!lastMail){ return; } var b = this, o = b.textContent; copyText(lastMail.text); b.textContent = 'copied ✓'; setTimeout(function(){ b.textContent = o; }, 1500);
+  });
+  document.querySelectorAll('.mailto-addr').forEach(function(s){ s.textContent = CONTACT_EMAIL; });
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var form = this;
+    lastMail = buildMail(); openMail(lastMail.url);
+    form.style.opacity = '0';
+    setTimeout(function(){
+      form.style.display = 'none';
+      var c = document.getElementById('confirmMsg');
+      c.style.display = 'block';
+      requestAnimationFrame(function(){ c.classList.add('in'); });
+    }, 280);
+  });
+
+  if('IntersectionObserver' in window){
+    var sections = document.querySelectorAll('main section');
+    sections.forEach(function(s){ s.classList.add('reveal'); });
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.add('in'); io.unobserve(entry.target); }
+      });
+    }, {threshold:.15});
+    sections.forEach(function(s){ io.observe(s); });
+  }
+
+  /* ---- Cart / Checkout (separate from main nav) ---- */
+  var CART = {};
+  var DELIVERY_FEE = 3;
+  var badge = document.getElementById('cartBadge');
+  var cartView = document.getElementById('cart-view');
+  var paymentView = document.getElementById('payment-view');
+  var swipeTrack = document.getElementById('swipePay');
+  var swipeThumb = document.getElementById('swipeThumb');
+  var swipeFill = document.getElementById('swipeFill');
+
+  function pulseBadge(){ badge.classList.remove('pulse'); void badge.offsetWidth; badge.classList.add('pulse'); }
+  function updateBadge(){
+    var n = 0; Object.keys(CART).forEach(function(k){ n += CART[k].qty; });
+    badge.textContent = 'Cart · ' + n;
+  }
+  function cartTotals(){
+    var subtotal = 0;
+    Object.keys(CART).forEach(function(k){ subtotal += CART[k].price * CART[k].qty; });
+    return {subtotal:subtotal, fee: subtotal > 0 ? DELIVERY_FEE : 0, total: subtotal + (subtotal > 0 ? DELIVERY_FEE : 0)};
+  }
+  function resetSwipe(){ swipeThumb.style.left = '4px'; swipeFill.style.width = '0'; swipeTrack.classList.remove('complete'); }
+  function updateSwipeLabel(){
+    var t = cartTotals(); var label = document.getElementById('swipeLabel');
+    if(t.subtotal > 0){ label.textContent = 'Slide to Pay · $' + t.total.toFixed(2); swipeTrack.classList.remove('disabled'); }
+    else { label.textContent = 'Cart is empty'; swipeTrack.classList.add('disabled'); }
+  }
+  function renderCart(){
+    var body = document.getElementById('cartBody');
+    var ids = Object.keys(CART).filter(function(k){ return CART[k].qty > 0; });
+    if(ids.length === 0){
+      body.innerHTML = '<div class="cart-empty">Your cart is empty.<br><br><button class="btn btn-outline" id="browseKeychains" type="button">Browse Keychains</button></div>';
+      document.getElementById('browseKeychains').addEventListener('click', function(){ closeCart(); showView('wood'); });
+    } else {
+      body.innerHTML = ids.map(function(id){
+        var it = CART[id];
+        return '<div class="cart-item" data-id="'+id+'"><div class="cart-thumb"></div>'+
+          '<div class="ci-info"><h4>'+it.name+'</h4><span class="muted">$'+it.price.toFixed(2)+' each</span></div>'+
+          '<div class="ci-qty"><button class="qty-btn" type="button" data-act="dec">−</button><span>'+it.qty+'</span><button class="qty-btn" type="button" data-act="inc">+</button></div>'+
+          '<div class="ci-total">$'+(it.price*it.qty).toFixed(2)+'</div></div>';
+      }).join('');
+      body.querySelectorAll('.qty-btn').forEach(function(b){
+        b.addEventListener('click', function(){
+          var id = b.closest('.cart-item').dataset.id;
+          if(b.dataset.act === 'inc'){ CART[id].qty++; } else { CART[id].qty--; if(CART[id].qty <= 0){ delete CART[id]; } }
+          updateBadge(); renderCart();
+        });
+      });
+    }
+    updateSwipeLabel();
+  }
+  function renderOrderSummary(){
+    var t = cartTotals();
+    var rows = Object.keys(CART).filter(function(k){ return CART[k].qty > 0; }).map(function(id){
+      var it = CART[id];
+      return '<div class="os-row"><span>'+it.name+' × '+it.qty+'</span><span>$'+(it.price*it.qty).toFixed(2)+'</span></div>';
+    }).join('');
+    rows += '<div class="os-row"><span>Delivery Fee</span><span>$'+t.fee.toFixed(2)+'</span></div>';
+    rows += '<div class="os-row os-total"><span>Total</span><span>$'+t.total.toFixed(2)+'</span></div>';
+    document.getElementById('orderSummary').innerHTML = rows;
+    document.getElementById('payAmount').textContent = '$'+t.total.toFixed(2);
+  }
+  function openSheet(el){ el.hidden = false; void el.offsetWidth; el.classList.add('show'); }
+  function closeSheet(el){ el.classList.remove('show'); setTimeout(function(){ el.hidden = true; }, 300); }
+  function openCart(){ openSheet(cartView); renderCart(); }
+  function closeCart(){ closeSheet(cartView); resetSwipe(); }
+  function openPayment(){ closeSheet(cartView); openSheet(paymentView); renderOrderSummary(); }
+  function closePayment(){ closeSheet(paymentView); openSheet(cartView); renderCart(); }
+
+  badge.addEventListener('click', openCart);
+  document.getElementById('cartBack').addEventListener('click', closeCart);
+  document.getElementById('paymentBack').addEventListener('click', closePayment);
+
+  var FLY_COLORS = {round:'var(--wood-light)', leaf:'var(--green)', block:'var(--wood)', tag:'var(--accent)'};
+  function flyToCart(sourceEl, id){
+    var s = sourceEl.getBoundingClientRect(), e = badge.getBoundingClientRect();
+    var dot = document.createElement('div');
+    dot.className = 'fly-dot';
+    dot.style.background = FLY_COLORS[id] || 'var(--accent)';
+    dot.style.left = (s.left + s.width/2 - 8) + 'px';
+    dot.style.top = (s.top + s.height/2 - 8) + 'px';
+    document.body.appendChild(dot);
+    var dx = (e.left + e.width/2) - (s.left + s.width/2);
+    var dy = (e.top + e.height/2) - (s.top + s.height/2);
+    var anim = dot.animate([
+      {transform:'translate(0,0) scale(1)', opacity:1, offset:0},
+      {transform:'translate('+(dx*.5)+'px,'+(dy-110)+'px) scale(.75)', opacity:1, offset:.55},
+      {transform:'translate('+dx+'px,'+dy+'px) scale(.2)', opacity:0, offset:1}
+    ], {duration:600, easing:'cubic-bezier(.3,.6,.4,1)', fill:'forwards'});
+    anim.addEventListener('finish', function(){ dot.remove(); });
+    return anim;
+  }
+
+  document.querySelectorAll('.add-cart').forEach(function(btn){
+    var id = btn.dataset.id;
+    var row = btn.closest('.row');
+    var stepper = row.querySelector('.stepper');
+    var qtyEl = stepper.querySelector('.step-qty');
+
+    function toStepper(){
+      btn.classList.add('morph-hide');
+      setTimeout(function(){
+        btn.hidden = true; btn.classList.remove('morph-hide','locked');
+        qtyEl.textContent = CART[id].qty;
+        stepper.hidden = false; stepper.classList.add('morph-hide');
+        void stepper.offsetWidth; stepper.classList.remove('morph-hide');
+      }, 220);
+    }
+    function toButton(){
+      stepper.classList.add('morph-hide');
+      setTimeout(function(){
+        stepper.hidden = true; stepper.classList.remove('morph-hide');
+        btn.hidden = false; btn.classList.add('morph-hide');
+        void btn.offsetWidth; btn.classList.remove('morph-hide');
+      }, 220);
+    }
+
+    btn.addEventListener('click', function(){
+      if(btn.classList.contains('locked')) return;
+      btn.classList.add('locked');
+      flyToCart(btn, id).onfinish = function(){
+        if(!CART[id]){ CART[id] = {name: btn.dataset.name, price: parseFloat(btn.dataset.price), qty: 0}; }
+        CART[id].qty++;
+        updateBadge(); pulseBadge();
+        toStepper();
+      };
+    });
+
+    stepper.querySelectorAll('.step-btn').forEach(function(sb){
+      sb.addEventListener('click', function(){
+        if(sb.dataset.act === 'inc'){ CART[id].qty++; } else { CART[id].qty--; }
+        updateBadge();
+        if(!CART[id] || CART[id].qty <= 0){ delete CART[id]; toButton(); }
+        else {
+          qtyEl.textContent = CART[id].qty;
+          qtyEl.classList.remove('roll'); void qtyEl.offsetWidth; qtyEl.classList.add('roll');
+        }
+      });
+    });
+  });
+
+  function calcMaxX(){ return swipeTrack.clientWidth - swipeThumb.offsetWidth - 8; }
+  var dragging = false, startX = 0;
+  swipeThumb.addEventListener('pointerdown', function(e){
+    if(swipeTrack.classList.contains('disabled')) return;
+    dragging = true; swipeTrack.classList.add('dragging'); swipeThumb.setPointerCapture(e.pointerId);
+    startX = e.clientX - swipeThumb.offsetLeft;
+  });
+  swipeThumb.addEventListener('pointermove', function(e){
+    if(!dragging) return;
+    var x = Math.min(Math.max(e.clientX - startX, 4), calcMaxX());
+    swipeThumb.style.left = x + 'px';
+    swipeFill.style.width = (x + swipeThumb.offsetWidth) + 'px';
+  });
+  function endSwipe(){
+    if(!dragging) return; dragging = false;
+    swipeTrack.classList.remove('dragging');
+    var x = parseFloat(swipeThumb.style.left) || 4, maxX = calcMaxX();
+    if(x >= maxX - 6){
+      swipeThumb.style.left = maxX + 'px'; swipeFill.style.width = '100%'; swipeTrack.classList.add('complete');
+      setTimeout(openPayment, 320);
+    } else { resetSwipe(); }
+  }
+  swipeThumb.addEventListener('pointerup', endSwipe);
+  swipeThumb.addEventListener('pointercancel', endSwipe);
+  swipeThumb.addEventListener('keydown', function(e){
+    if((e.key === 'Enter' || e.key === ' ') && !swipeTrack.classList.contains('disabled')){
+      e.preventDefault();
+      var maxX = calcMaxX();
+      swipeThumb.style.left = maxX + 'px'; swipeFill.style.width = '100%'; swipeTrack.classList.add('complete');
+      setTimeout(openPayment, 320);
+    }
+  });
+  ['payZip','payPhone','cardNum','cardCvv'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', function(){
+      this.value = this.value.replace(/\D/g,'').slice(0, this.maxLength);
+    });
+  });
+  document.getElementById('cardExp').addEventListener('input', function(){
+    var v = this.value.replace(/\D/g,'').slice(0,4);
+    this.value = v.length > 2 ? v.slice(0,2) + '/' + v.slice(2) : v;
+  });
+
+  function burstConfetti(){
+    var layer = document.getElementById('confettiLayer');
+    layer.innerHTML = '';
+    var colors = ['var(--accent)','var(--wood)','var(--green)','var(--stone-dark)','var(--wood-light)'];
+    for(var i = 0; i < 36; i++){
+      var p = document.createElement('span');
+      p.className = 'confetti-piece';
+      p.style.setProperty('--tx', (Math.random()*300-150).toFixed(0)+'px');
+      p.style.setProperty('--ty', (-(220+Math.random()*160)).toFixed(0)+'px');
+      p.style.setProperty('--rot', (Math.random()*720-360).toFixed(0)+'deg');
+      p.style.setProperty('--cdur', (0.9+Math.random()*0.6).toFixed(2)+'s');
+      p.style.setProperty('--cdelay', (Math.random()*0.25).toFixed(2)+'s');
+      p.style.background = colors[i % colors.length];
+      p.style.left = (45 + Math.random()*10) + '%';
+      layer.appendChild(p);
+    }
+  }
+
+  document.getElementById('paymentForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    closeSheet(paymentView);
+    CART = {}; updateBadge(); resetSwipe();
+    var ov = document.getElementById('orderComplete');
+    ov.hidden = false; void ov.offsetWidth; ov.classList.add('show');
+    burstConfetti();
+  });
+  document.getElementById('continueShopping').addEventListener('click', function(){
+    var ov = document.getElementById('orderComplete');
+    ov.classList.remove('show');
+    setTimeout(function(){ ov.hidden = true; document.getElementById('confettiLayer').innerHTML = ''; }, 300);
+  });
+})();
+</script>
+<script>
+(function(){
+  var hdr = document.querySelector('header.nav');
+  function onScroll(){ hdr.classList.toggle('scrolled', window.scrollY > 8); }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  var art = document.getElementById('heroArt'); if(!art) return;
+  var svg = art.querySelector('svg'), mound = svg.querySelector('#moundShape'), layer = svg.querySelector('#scatter');
+  var NS = 'http://www.w3.org/2000/svg', seed = 11;
+  function rnd(){ seed = (seed + 0x6D2B79F5) | 0; var t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }
+  function mk(n, a, p){ var e = document.createElementNS(NS, n); for(var k in a){ e.setAttribute(k, a[k]); } if(p){ p.appendChild(e); } return e; }
+  function inside(x, y){ return mound.isPointInFill(new DOMPoint(x, y)); }
+  function crest(x){ var lo = 120, hi = 560; for(var i = 0; i < 10; i++){ var m = (lo + hi) / 2; if(inside(x, m)){ hi = m; } else { lo = m; } } return hi; }
+
+  try{
+    var items = [], GREENS = ['#3F6B33','#5C8A44','#7FAE57','#96BF68'], PET = ['#F8F1E1','#EBBB40','#E98B70','#B7A2D9','#F5B8C4'], STONES = ['stoneA','stoneB','stoneC'];
+    function sc(y){ return .55 + Math.max(0, y - 200) / 330 * .85; }
+    function tuft(x, y, n, h){
+      var g = mk('g', {});
+      for(var i = 0; i < n; i++){
+        var lean = (rnd() - .5) * h * .9, hh = h * (.6 + rnd() * .6), w = 1.4 + rnd() * .8, bx = (i - n / 2) * 2.2;
+        mk('path', {d:'M'+(bx-w)+' 0Q'+(bx+lean*.4)+' '+(-hh*.6)+' '+(bx+lean)+' '+(-hh)+'Q'+(bx+lean*.4+w)+' '+(-hh*.55)+' '+(bx+w)+' 0Z', fill:GREENS[(rnd()*4)|0]}, g);
+      }
+      items.push({x:x, y:y, s:sc(y), g:g});
+    }
+    function flower(x, y){
+      var g = mk('g', {}), c = PET[(rnd()*5)|0];
+      for(var k = 0; k < 5; k++){ mk('ellipse', {cx:0, cy:-5.5, rx:4.4, ry:6.2, fill:c, transform:'rotate('+(k*72)+')'}, g); }
+      mk('circle', {r:2.6, fill:c === '#EBBB40' ? '#8A4B1C' : '#F0BE45'}, g);
+      items.push({x:x, y:y, s:sc(y) * 1.15, g:g});
+    }
+    function stone(x, y){
+      var g = mk('g', {}), rx = 7 + rnd() * 12, ry = rx * (.55 + rnd() * .2);
+      mk('ellipse', {cx:1.5, cy:ry*.55, rx:rx*1.05, ry:ry*.45, fill:'#2A0C04', 'fill-opacity':.28}, g);
+      mk('ellipse', {cx:0, cy:0, rx:rx, ry:ry, fill:'url(#'+STONES[(rnd()*3)|0]+')'}, g);
+      mk('ellipse', {cx:-rx*.25, cy:-ry*.35, rx:rx*.45, ry:ry*.28, fill:'#fff', 'fill-opacity':.28}, g);
+      items.push({x:x, y:y, s:sc(y), g:g, rot:(rnd()-.5)*30});
+    }
+    var x, y, i;
+    for(x = 310; x < 792; x += 6 + rnd() * 5){ if(Math.abs(x - 548) < 22){ continue; } tuft(x, crest(x) + 3, 3 + ((rnd()*3)|0), 14 + rnd() * 14); }
+    for(i = 0; i < 22; i++){ x = 330 + rnd() * 455; if(Math.abs(x - 548) < 40){ continue; } y = crest(x) + 14 + rnd() * 70; tuft(x, y, 3 + ((rnd()*2)|0), 10 + rnd() * 10); }
+    for(i = 0; i < 46; i++){ x = 345 + rnd() * 445; if(Math.abs(x - 548) < 34){ continue; } y = crest(x) + 8 + rnd() * 125; if(!inside(x, y)){ continue; } flower(x, y); }
+    for(i = 0; i < 22; i++){ x = -300 + rnd() * 1090; y = 240 + rnd() * 300; if(!inside(x, y)){ continue; } stone(x, y); }
+    items.sort(function(a, b){ return a.y - b.y; });
+    items.forEach(function(it, idx){
+      var o = mk('g', {transform:'translate('+it.x.toFixed(1)+' '+it.y.toFixed(1)+') scale('+it.s.toFixed(2)+')'+(it.rot ? ' rotate('+it.rot.toFixed(0)+')' : '')}, layer);
+      var p = mk('g', {'class':'pop', style:'--d:'+(0.85 + idx / items.length * 0.95 + rnd() * .15).toFixed(2)+'s'}, o);
+      p.appendChild(it.g);
+    });
+  }catch(e){}
+  function heap(id, n, rmin, rmax, spread, grads, sd, fixed){
+    var g = document.getElementById(id); if(!g){ return; }
+    function r(){ sd = (sd + 0x6D2B79F5) | 0; var t = Math.imul(sd ^ (sd >>> 15), 1 | sd); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }
+    var list = fixed || [], i;
+    for(i = 0; !fixed && i < n; i++){
+      var rx = rmin + r() * (rmax - rmin), d = r();
+      list.push({x:100 + (r() - .5) * spread * (.3 + d * .95), y:150 - (1 - d) * spread * .5, rx:rx, ry:rx * (.62 + r() * .2), gr:grads[(r() * grads.length) | 0]});
+    }
+    list.sort(function(a, b){ return a.y - b.y; });
+    list.forEach(function(s){
+      mk('ellipse', {cx:s.x + 1.5, cy:s.y + s.ry * .55, rx:s.rx * 1.05, ry:s.ry * .45, fill:'#000', 'fill-opacity':.28}, g);
+      mk('ellipse', {cx:s.x, cy:s.y, rx:s.rx, ry:s.ry, fill:'url(#' + s.gr + ')'}, g);
+      mk('ellipse', {cx:s.x - s.rx * .25, cy:s.y - s.ry * .35, rx:s.rx * .45, ry:s.ry * .26, fill:'#fff', 'fill-opacity':.26}, g);
+    });
+  }
+  heap('heapStones', 15, 11, 20, 130, ['stoneA','stoneC','stoneA'], 21);
+  heap('heapPebbles', 26, 7, 13, 140, ['stoneB','stoneA','stoneB','stoneC'], 5);
+  heap('heapBoulders', 0, 0, 0, 0, [], 1, [{x:70,y:126,rx:44,ry:31,gr:'stoneB'},{x:132,y:131,rx:46,ry:33,gr:'stoneA'},{x:102,y:98,rx:36,ry:27,gr:'stoneB'}]);
+  requestAnimationFrame(function(){ art.classList.add('go'); });
+  document.querySelectorAll('.quick').forEach(function(q){
+    q.addEventListener('click', function(){
+      var c = q.closest('.bt-card');
+      var inc = c.querySelector('.stepper:not([hidden]) .step-btn[data-act="inc"]');
+      var add = c.querySelector('.add-cart');
+      if(inc){ inc.click(); } else if(add && !add.hidden){ add.click(); }
+    });
+  });
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches && window.CSS && CSS.supports('rotate', '1deg')){
+    var mx = -9999, my = -9999, running = false, last = 0, lastKick = 0, swing = [];
+    [['.hang', 320, 15], ['.bt-big', 360, 15], ['.bt-img .sw', 380, 15], ['.ts-card .art .sw', 380, 26]].forEach(function(s){
+      document.querySelectorAll(s[0]).forEach(function(el){ swing.push({el:el, R:s[1], max:s[2], a:0, v:0, depth:el.classList.contains('far') ? .55 : 1}); });
+    });
+    var step = function(t){
+      var dt = Math.min(2.5, (t - last) / 16.667 || 1), moving = false; last = t;
+      swing.forEach(function(it){
+        var el = it.el, par = el.offsetParent, target = 0;
+        if(par){
+          var pr = par.getBoundingClientRect();
+          var px = pr.left + el.offsetLeft + el.offsetWidth / 2, py = pr.top + el.offsetTop + el.offsetHeight * .5;
+          var dx = mx - px, k = Math.max(0, 1 - Math.hypot(dx, my - py) / it.R);
+          k = k * k * (3 - 2 * k);
+          target = -Math.max(-1, Math.min(1, dx / (it.R * .6))) * it.max * k * it.depth;
+        }
+        it.v += (target - it.a) * .055 * dt;
+        it.v *= Math.pow(.88, dt);
+        it.a += it.v * dt;
+        if(Math.abs(it.v) > .005 || Math.abs(it.a - target) > .02){ moving = true; el.style.rotate = it.a.toFixed(3) + 'deg'; }
+        else if(it.a !== target){ it.a = target; el.style.rotate = target ? target.toFixed(3) + 'deg' : ''; }
+      });
+      if(moving || t - lastKick < 500){ requestAnimationFrame(step); } else { running = false; }
+    };
+    var kick = function(){
+      lastKick = performance.now();
+      if(!running){ running = true; last = lastKick; requestAnimationFrame(step); }
+    };
+    window.addEventListener('pointermove', function(e){ mx = e.clientX; my = e.clientY; kick(); }, {passive:true});
+    window.addEventListener('scroll', kick, {passive:true});
+    window.addEventListener('pointerup', function(e){ if(e.pointerType === 'touch'){ mx = my = -9999; kick(); } });
+    document.documentElement.addEventListener('mouseleave', function(){ mx = my = -9999; kick(); });
+  }
+  var nums = document.querySelector('.bt-stats .nums');
+  if(nums && 'IntersectionObserver' in window){
+    var done = false;
+    new IntersectionObserver(function(es, o){
+      es.forEach(function(e){
+        if(!e.isIntersecting || done){ return; }
+        done = true; o.disconnect();
+        nums.querySelectorAll('strong').forEach(function(s){
+          var to = +s.dataset.count, suf = s.dataset.suffix || '', t0 = performance.now();
+          (function tick(t){
+            var k = Math.min(1, (t - t0) / 1500), v = Math.round(to * (1 - Math.pow(1 - k, 3)));
+            s.textContent = v + suf;
+            if(k < 1){ requestAnimationFrame(tick); }
+          })(t0);
+        });
+      });
+    }, {threshold:.4}).observe(nums);
+  }
+})();
+</script>
+<script>
+if('serviceWorker' in navigator){ window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
+</script>
+</body>
+</html>
